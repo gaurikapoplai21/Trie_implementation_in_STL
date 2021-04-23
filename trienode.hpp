@@ -3,7 +3,7 @@ using namespace std;
 #define SIZE 26
 
 struct TrieNode{
-    map<char, struct TrieNode *>next;
+    map<char, struct TrieNode *> next;
     int value;
     bool eow;
 };
