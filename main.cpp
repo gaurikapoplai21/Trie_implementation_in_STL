@@ -22,11 +22,24 @@ int main() {
     // mp[10] = 1;
     // cout << "emp: ", mp.empty() << endl;
 
-    trie t;
+    /*trie t;
     t["low"] = 10;
     // t["lolpo"] = 8;
     t.remove("low");
     cout << "here" << t.empty() << endl;
     cout << t.find("lol") << endl;
-    return 0;
+    return 0;*/
+
+    //implement
+    trie<int> t;
+    t.insert("hello");
+    t.insert("helloworld");
+    t.insert("gaurika");
+    trie<int> :: iterator it = t.begin();
+    trie<int> :: iterator it2 = t.end();
+    for(it; it != it2 ;it++)
+    {
+        cout<<*it<<" ";
+    }
+
 }

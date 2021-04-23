@@ -1,13 +1,24 @@
 #include <bits/stdc++.h>
 #include "trienode.hpp"
+#include "trie_iterator.hpp"
 using namespace std;
 #define SIZE 26
 
+template<typename T>
 class trie{
     private: 
         TrieNode* root;
 
     public:
+    
+
+    using iterator = trie_iterator<T>;
+
+    //begin and end objects of template class trie_iterator
+    iterator begin();
+    iterator end();
+
+
     trie() {
         root = createNode();
     }
@@ -81,3 +92,13 @@ class trie{
         deleteNode(this->root, key);
     }
 };
+
+template<typename T> trie<T> :: begin()
+{
+
+}
+
+template<typename T> trie<T>::end()
+{
+   
+}

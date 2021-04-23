@@ -1,11 +1,12 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define SIZE 26
+#ifndef TRIE_NODE_H
+#define TRIE_NODE_H
 
-struct TrieNode{
+template<typename T>
+class TrieNode{
     map<char, struct TrieNode *> next;
-    int value;
+    T value;
     bool eow;
 };
 
-typedef struct TrieNode TrieNode;
+#endif
+
