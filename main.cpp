@@ -42,10 +42,11 @@ int main() {
      trie<int> t;
      t.insert("hello");
      t.insert("helloworld");
-     //t.insert("prithwish");
+     t.insert("hellz");
 
-     
-     trie<int> :: iterator it = t.end(); 
+     trie<int>::iterator it = t.end();
+     cout<<*it;
+     //trie<int> :: iterator it = t.end(); 
 
     return 0;
 }

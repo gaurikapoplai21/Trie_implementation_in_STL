@@ -232,9 +232,11 @@ typename trie<T>::iterator trie<T>::begin()
      //cout<<ptr->key<<" ";
      while(!ptr->next.empty())
      {
-         ptr = ptr->next.begin()->second;
+         auto i = ptr->next.end();
+         --i;
+         ptr = i->second;
      }
-     //cout << ptr->key;
+     cout << ptr->key;
      cout<<ptr->next.begin()->first;
      ptr = ptr->next.begin()->second;
      iterator it2(ptr);
