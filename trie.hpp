@@ -51,7 +51,7 @@ TrieNode<T>* trie<T>::insert(string key, T value) {
     for(int i=0; i<key.size(); i++) {
         if(parse->next.find(key[i]) == parse->next.end()) {
           parse->next[key[i]] = this->createNode(key[i]);
-          parse->next[key[i]].addParent(parse);
+          parse->next[key[i]]->addParent(parse);
         }
         parse = parse->next[key[i]];
     }
