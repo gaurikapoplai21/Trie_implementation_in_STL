@@ -29,8 +29,9 @@ class trie{
         {
             TrieNode<T>* parse = this->root;
             recursive_destroy(root);
-            
-            
+            delete(root);
+            this->capacity--;
+            cout<<this->capacity<<"\n";
         }
         T& operator[] (string key) {
             return ((this->insert(key))->value);
@@ -61,23 +62,33 @@ class trie{
         int size();
 };
 
-template<typename T> void :: recursive_destroy(TrieNode<T>* root)
+template<typename T> void trie<T>:: recursive_destroy(TrieNode<T>* root)
 {
     if(root->next.size() == 0)
-    {   
+    {
         delete(root);
+        root=nullptr;
+        this->capacity--;
         return;
+
     }
-    map<char, TrieNode<T> *> :: iterator it = root->next.begin();
+    for(auto it: root->next) {
+        recursive_destroy(it.second);
+        cout<<it.first<<" ";
+    }
+
+    /*
+    auto it = root->next.begin();
     for (it; it != root->next.end(); it++)
     {
         recursive_destroy(it.second);
         cout << it.second << " ";
     }
-        
+    */
+
 }
 
-template<typename T> 
+template<typename T>
 TrieNode<T>* trie<T>::createNode(char key) {
     TrieNode<T>* node = new TrieNode<T>();
     node->key = key;
