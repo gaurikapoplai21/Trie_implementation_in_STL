@@ -11,6 +11,30 @@ class TrieNode{
         char key;
         T value;
         bool eow;
+
+        void addParent(TrieNode<T> *parent);
+        char getKey();
+        TrieNode<T>* getParent();
+    private:
+        TrieNode<T>* parent;
+
+
 };
+
+template <typename T>
+void TrieNode<T>::addParent(TrieNode<T> *parent) : parent(parent)
+{
+
+}
+
+template <typename T>
+char TrieNode<T>::getKey() {
+  return this->key;
+}
+
+template <typename T>
+TrieNode<T>* TrieNode<T>::getParent() {
+  return this->parent;
+}
 
 #endif
