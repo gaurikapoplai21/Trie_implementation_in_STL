@@ -11,20 +11,21 @@ class TrieNode{
         char key;
         T value;
         bool eow;
+        TrieNode<T>* parent;
 
         void addParent(TrieNode<T> *parent);
         char getKey();
         TrieNode<T>* getParent();
     private:
-        TrieNode<T>* parent;
+
 
 
 };
 
 template <typename T>
-void TrieNode<T>::addParent(TrieNode<T> *parent) : parent(parent)
+void TrieNode<T>::addParent(TrieNode<T> *parent)
 {
-
+    this->parent = parent;
 }
 
 template <typename T>
