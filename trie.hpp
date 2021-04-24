@@ -6,16 +6,18 @@ template<typename T>
 class trie{
     private: 
         TrieNode<T>* root;
+        int capacity;
 
     public:
     // using iterator = trie_iterator<T>;
 
-    //begin and end objects of template class trie_iterator
+    // begin and end objects of template class trie_iterator
     // iterator begin();
     // iterator end();
 
     trie() {
         root = createNode();
+        capacity = 0;
     }
 
     T& operator[] (string key) {
@@ -29,12 +31,13 @@ class trie{
         return node;
     }
 
-    TrieNode<T>* insertNode(string key, int value = 0) {
+    TrieNode<T>* insertNode(string key, T value = T()) {
         TrieNode<T>* parse = this->root;
         for(int i=0; i<key.size(); i++) {
             if(parse->next.find(key[i]) == parse->next.end()) parse->next[key[i]] = this->createNode();
             parse = parse->next[key[i]];
         }
+        if(!parse->eow) this->capacity++;
         parse->eow = 1;
         return parse;
     }
@@ -55,7 +58,7 @@ class trie{
     TrieNode<T>* deleteNode(TrieNode<T>* root, string key, int depth = 0) {
         if (!root) return NULL;
         if (depth == key.size()) {
-            if (root->eow) root->eow = 0;
+            if (root->eow) {this->capacity--; root->eow = 0;}
             if (root->next.empty()) {
                 delete (root);
                 root = NULL;
@@ -76,6 +79,10 @@ class trie{
 
     void erase(string key) {
         deleteNode(this->root, key);
+    }
+
+    int size() {
+        return this->capacity;
     }
 };
 

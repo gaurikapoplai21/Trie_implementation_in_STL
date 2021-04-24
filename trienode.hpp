@@ -7,7 +7,8 @@ using namespace std;
 template<typename T>
 class TrieNode{
     public:
-        map<char, class TrieNode<T> *> next;
+        map<char, TrieNode<T>*> next;
+        // char key;
         T value;
         bool eow;
 };
