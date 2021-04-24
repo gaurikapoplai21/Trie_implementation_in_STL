@@ -13,6 +13,7 @@ private:
     TrieNode<T> *createNode(char key);
     TrieNode<T> *deleteNode(TrieNode<T> *root, string key, int depth = 0);
     void recursive_destroy(TrieNode<T> *root);
+    void deepcopyroot(TrieNode<T> *a, TrieNode<T> *b);
     int checksize(TrieNode<T> *root);
 
 public:
@@ -36,18 +37,6 @@ public:
     T &operator[](string key)
     {
         return ((this->insert(key))->value);
-    }
-
-    void deepcopyroot(TrieNode<T> *a, TrieNode<T> *b)
-    {
-        b->eow = a->eow;
-        b->value = a->value;
-        for (auto x : a->next)
-        {
-            b->next[x.first] = createNode(x.first);
-            b->next[x.first]->addParent(b);
-            deepcopyroot(x.second, b->next[x.first]);
-        }
     }
 
     trie<T> &operator=(const trie<T> &x)
@@ -204,6 +193,19 @@ template <typename T>
 int trie<T>::size()
 {
     return checksize(root);
+}
+
+template <typename T>
+void trie<T>::deepcopyroot(TrieNode<T> *a, TrieNode<T> *b)
+{
+    b->eow = a->eow;
+    b->value = a->value;
+    for (auto x : a->next)
+    {
+        b->next[x.first] = createNode(x.first);
+        b->next[x.first]->addParent(b);
+        deepcopyroot(x.second, b->next[x.first]);
+    }
 }
 
 // template<typename T> trie<T> :: begin()
