@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 #include "trienode.hpp"
-// #include "trie_iterator.hpp"
 using namespace std;
-#define SIZE 26
 
 template<typename T>
 class trie{
@@ -10,31 +8,29 @@ class trie{
         TrieNode<T>* root;
 
     public:
-
     // using iterator = trie_iterator<T>;
 
     //begin and end objects of template class trie_iterator
     // iterator begin();
     // iterator end();
 
-
     trie() {
         root = createNode();
     }
 
-    int& operator[] (string key) {
+    T& operator[] (string key) {
         return ((this->insertNode(key))->value);
     }
 
     TrieNode<T>* createNode() {
-        TrieNode<T>* node = new TrieNode<T>;
+        TrieNode<T>* node = new TrieNode<T>();
         node->eow = 0;
         node->value = T();
         return node;
     }
 
-    TrieNode<T>* insertNode(string key, T value = T()) {
-        TrieNode<T> *parse = this->root;
+    TrieNode<T>* insertNode(string key, int value = 0) {
+        TrieNode<T>* parse = this->root;
         for(int i=0; i<key.size(); i++) {
             if(parse->next.find(key[i]) == parse->next.end()) parse->next[key[i]] = this->createNode();
             parse = parse->next[key[i]];
