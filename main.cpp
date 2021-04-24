@@ -24,6 +24,16 @@ int main() {
     cout<<root.next[root.key]->key<<"\n";
     TrieNode<string> *temp = root.next[root.key];
     cout<<temp->getParent()->key<<"\n";
+    
+    //iterator copy assignement
+    //*
+    // == !=
+    
+    Trie<int>::iterator it = t.begin();
+    for (it; it != it.end;it++)
+    {
+        cout<<*it<<" ";
+    }
 
-    return 0;
+        return 0;
 }

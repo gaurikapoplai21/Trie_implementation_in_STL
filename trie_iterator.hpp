@@ -10,7 +10,7 @@ private:
 public:
     trie_iterator();                          //default ctor
     explicit trie_iterator(TrieNode<T> *ptr); //parameterized ctor
-
+    
     //copy ctor
     trie_iterator<T>(const trie_iterator<T> &) = delete; //tbd
 
