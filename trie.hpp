@@ -4,7 +4,7 @@ using namespace std;
 
 template<typename T>
 class trie{
-    private: 
+    private:
         // Private Members
         TrieNode<T>* root;
         int capacity;
@@ -34,6 +34,24 @@ class trie{
         }
         T& operator[] (string key) {
             return ((this->insert(key))->value);
+        }
+
+        void deepcopyroot(TrieNode<T>* a, TrieNode<T>* b){
+            for(auto x: a->next){
+                b->next[x.first] = createNode(x.first);
+                b->next[x.first]->addParent(b);
+                b->eow = a->eow;
+                b->value = a->value;
+                deepcopyroot(x.second, b->next[x.first]);
+            }
+        }
+
+        trie<T>& operator= (const trie<T> &x) {
+            if(this != &x){
+                this->capacity = x.capacity;
+                deepcopyroot(x.root, this->root);
+            }
+            return *this;
         }
 
         TrieNode<T>* insert(string key, T value = T());
@@ -68,11 +86,14 @@ TrieNode<T>* trie<T>::createNode(char key) {
     return node;
 }
 
-template<typename T> 
+template<typename T>
 TrieNode<T>* trie<T>::insert(string key, T value) {
     TrieNode<T>* parse = this->root;
     for(int i=0; i<key.size(); i++) {
-        if(parse->next.find(key[i]) == parse->next.end()) parse->next[key[i]] = this->createNode(key[i]);
+        if(parse->next.find(key[i]) == parse->next.end()) {
+          parse->next[key[i]] = this->createNode(key[i]);
+          parse->next[key[i]]->addParent(parse);
+        }
         parse = parse->next[key[i]];
     }
     if(!parse->eow) this->capacity++;
@@ -80,7 +101,7 @@ TrieNode<T>* trie<T>::insert(string key, T value) {
     return parse;
 }
 
-template<typename T> 
+template<typename T>
 TrieNode<T>* trie<T>::deleteNode(TrieNode<T>* root, string key, int depth) {
     if (!root) return NULL;
     if (depth == key.size()) {
@@ -91,7 +112,7 @@ TrieNode<T>* trie<T>::deleteNode(TrieNode<T>* root, string key, int depth) {
         }
         return root;
     }
-    
+
     TrieNode<T>* temp = this->deleteNode(root->next[key[depth]], key, depth + 1);
     if(!temp) root->next.erase(key[depth]);
     else root->next[key[depth]] = temp;
@@ -104,7 +125,7 @@ TrieNode<T>* trie<T>::deleteNode(TrieNode<T>* root, string key, int depth) {
 }
 
 
-template<typename T> 
+template<typename T>
 bool trie<T>::contains(string key) {
     TrieNode<T> *parse = this->root;
     for(int i=0; i<key.size(); i++) {
@@ -114,17 +135,17 @@ bool trie<T>::contains(string key) {
     return parse->eow;
 }
 
-template<typename T> 
+template<typename T>
 void trie<T>::erase(string key) {
     deleteNode(this->root, key);
 }
 
-template<typename T> 
+template<typename T>
 bool trie<T>::empty() {
     return this->root->next.empty();
 }
 
-template<typename T> 
+template<typename T>
 int trie<T>::size() {
     return this->capacity;
 }
@@ -136,5 +157,5 @@ int trie<T>::size() {
 
 // template<typename T> trie<T>::end()
 // {
-   
+
 // }

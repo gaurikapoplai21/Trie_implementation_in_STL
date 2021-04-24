@@ -21,11 +21,11 @@ public:
     ~trie_iterator() = default;
 
     //operator functions
-    trie_iterator<T> operator++(int); //post
-    trie_iterator<T>* operator++() = delete; //tbd pre
-    trie_iterator<T> operator--(int);//post
-    trie_iterator<T> operator--() = delete; //tbd pre
-    T operator*() const; 
+    trie_iterator<T> operator++(int);        //post
+    trie_iterator<T> *operator++() = delete; //tbd pre
+    trie_iterator<T> operator--(int);        //post
+    trie_iterator<T> operator--() = delete;  //tbd pre
+    T operator*() const;
     T operator->() const;
 
     //friend functions
@@ -37,9 +37,9 @@ public:
     friend bool operator>(const trie_iterator<T> &, const trie_iterator<T> &);
 };
 
-template <typename T> trie_iterator<T>::trie_iterator() : ptr_t(NULL)
+template <typename T>
+trie_iterator<T>::trie_iterator() : ptr_t(NULL)
 {
-
 }
 
 template <typename T>
@@ -50,11 +50,10 @@ trie_iterator<T>::trie_iterator(TrieNode<T> *ptr) : ptr_t(ptr)
 template <typename T>
 trie_iterator<T>::bool operator==(const trie_iterator<T> &, const trie_iterator<T> &)
 {
-    
 }
 
 template <typename T>
-trie_iterator<T>::bool operator!=(const trie_iterator<T>& one , const trie_iterator<T>& two)
+trie_iterator<T>::bool operator!=(const trie_iterator<T> &one, const trie_iterator<T> &two)
 {
     return !(one == two);
 }
