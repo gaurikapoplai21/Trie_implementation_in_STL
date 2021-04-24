@@ -4,19 +4,23 @@ using namespace std;
 
 int main() {
     {
-        trie<string> t;
+        trie<string> t, t1;
         t["hello"] = "hey";
         t["helloworld"] = "whoa";
+        t1["godzilla"] = "mad";
         // t["gaurika"] = "girl";
         // cout << t.size() << endl;
         // cout << t["gaurika"] << endl;
         // cout << t.contains("gaurika") << endl;
         // cout << t["joke"] << endl;
         // cout << t.contains("jok") << endl;
-        // t1 = t;
-        // t.erase("hello");
+        t1 = t;
+        trie<string> t2 = t;
+        t.erase("hello");
         cout << t.size() << endl;
-        // cout << t1.size() << endl;
+        cout << t1.size() << endl;
+        cout << t1.contains("godzilla") <<endl;
+        cout << t2.size() << endl;
     }
 
     // TrieNode<string> root;
