@@ -14,6 +14,7 @@ private:
     TrieNode<T> *createNode(char key);
     TrieNode<T> *deleteNode(TrieNode<T> *root, string key, int depth = 0);
     void recursive_destroy(TrieNode<T> *root);
+    void deepcopyroot(TrieNode<T> *a, TrieNode<T> *b);
     int checksize(TrieNode<T> *root);
 
 public:
@@ -32,7 +33,6 @@ public:
     {
         TrieNode<T> *parse = this->root;
         recursive_destroy(root);
-        cout << "size: " << this->size() << endl;
     }
 
     T &operator[](string key)
@@ -40,27 +40,24 @@ public:
         return ((this->insert(key))->value);
     }
 
-    void deepcopyroot(TrieNode<T> *a, TrieNode<T> *b)
-    {
-        for (auto x : a->next)
-        {
-            b->next[x.first] = createNode(x.first);
-            b->next[x.first]->addParent(b);
-            b->eow = a->eow;
-            b->value = a->value;
-            deepcopyroot(x.second, b->next[x.first]);
-        }
-    }
-
     trie<T> &operator=(const trie<T> &x)
     {
         if (this != &x)
         {
             recursive_destroy(this->root);
-            // cout << "yes: "<< this->empty() << endl;
+            this->root = this->createNode('#');
             deepcopyroot(x.root, this->root);
         }
         return *this;
+    }
+
+    trie (const trie<T> &x)
+    {
+        if (this != &x)
+        {
+            this->root = this->createNode('#');
+            deepcopyroot(x.root, this->root);
+        }
     }
 
     TrieNode<T> *insert(string key, T value = T());
