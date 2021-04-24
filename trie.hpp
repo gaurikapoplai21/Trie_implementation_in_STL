@@ -12,6 +12,7 @@ class trie{
         // Private Methods
         TrieNode<T>* createNode(char key);
         TrieNode<T>* deleteNode(TrieNode<T>* root, string key, int depth = 0);
+        void recursive_destroy(TrieNode<T>* root);
 
     public:
         // using iterator = trie_iterator<T>;
@@ -24,7 +25,13 @@ class trie{
             root = this->createNode('#');
             capacity = 0;
         }
-
+        ~trie()
+        {
+            TrieNode<T>* parse = this->root;
+            recursive_destroy(root);
+            
+            
+        }
         T& operator[] (string key) {
             return ((this->insert(key))->value);
         }
@@ -35,6 +42,22 @@ class trie{
         bool empty();
         int size();
 };
+
+template<typename T> void :: recursive_destroy(TrieNode<T>* root)
+{
+    if(root->next.size() == 0)
+    {   
+        delete(root);
+        return;
+    }
+    map<char, TrieNode<T> *> :: iterator it = root->next.begin();
+    for (it; it != root->next.end(); it++)
+    {
+        recursive_destroy(it.second);
+        cout << it.second << " ";
+    }
+        
+}
 
 template<typename T> 
 TrieNode<T>* trie<T>::createNode(char key) {

@@ -14,5 +14,7 @@ int main() {
     cout << t.contains("jok") << endl;
     t.erase("hellow");
     cout << t.size() << endl;
+
+    
     return 0;
 }
