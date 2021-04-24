@@ -3,43 +3,21 @@
 using namespace std;
 
 int main() {
-    // trie t;
-    // t.insertNode("nice", 69);
-    // cout << "donno" << endl;
-    // cout << t.searchNode("nice") << endl;
-    // t.deleteNode(t.root, "nice");
-    // cout << t.searchNode("nice") << endl;
-    // trie t;
-    // t["lol"] = 10;
-    // cout << ++t["lol"] << endl;
-    // cout << t["nice"] << endl;
-    // cout << t.find("nice") <<endl;
-    // cout << t.empty() << endl;
-    // t.remove("lol");
-    // cout << t.empty() << endl;
-    // cout << t.find("nice") << endl;
-    // map<int,int> mp;
-    // mp[10] = 1;
-    // cout << "emp: ", mp.empty() << endl;
-
-    /*trie t;
-    t["low"] = 10;
-    // t["lolpo"] = 8;
-    t.remove("low");
-    cout << "here" << t.empty() << endl;
-    cout << t.find("lol") << endl;
-    return 0;*/
-
     //implement
     trie<int> t;
-    t.insert("hello");
-    t.insert("helloworld");
-    t.insert("gaurika");
-    trie<int> :: iterator it = t.begin();
-    trie<int> :: iterator it2 = t.end();
-    for(it; it != it2 ;it++)
-    {
-        cout<<*it<<" ";
-    }
+    t["hello"] = 10;
+    t["helloworld"] = 11; 
+    t["gaurika"] = 12; 
+    cout << t["gaurika"] << endl;
+    cout << t.find("joke") << endl;
+    // t.insertNode("hello");
+    // t.insertNode("helloworld");
+    // t.insertNode("gaurika");
+    // trie<int> :: iterator it = t.begin();
+    // trie<int> :: iterator it2 = t.end();
+    // for(it; it != it2 ;it++)
+    // {
+    //     cout<<*it<<" ";
+    // }
 
 }
