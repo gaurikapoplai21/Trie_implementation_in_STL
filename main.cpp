@@ -41,7 +41,8 @@ int main() {
 
      trie<int> t;
      t.insert("hello");
+     t.insert("helloworld");
      trie<int> :: iterator it = t.begin(); 
-
+    cout<<*it;
     return 0;
 }

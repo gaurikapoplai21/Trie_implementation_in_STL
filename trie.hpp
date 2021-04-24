@@ -211,7 +211,7 @@ typename trie<T>::iterator trie<T>::begin()
      {
          ptr = ptr->next.begin()->second;
      }
-     cout<<ptr->key;
+     //cout<<ptr->key;
      iterator it(ptr);
      return it;
  }

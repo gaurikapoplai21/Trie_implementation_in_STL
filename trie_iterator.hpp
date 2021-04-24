@@ -26,7 +26,7 @@ public:
     trie_iterator<T> *operator++() = delete; //tbd pre
     trie_iterator<T> operator--(int);        //post
     trie_iterator<T> operator--() = delete;  //tbd pre
-    T operator*() const;
+    string operator*() const;
     //T operator->() const;
 
     //friend functions
@@ -61,6 +61,19 @@ trie_iterator<T> trie_iterator<T>:: operator=(const trie_iterator<T> & rhs)
 template <typename T>
 trie_iterator<T>::trie_iterator(const trie_iterator<T>& rhs) : ptr_t(rhs.ptr_t){ }
 
+template<typename T>
+string trie_iterator<T>::operator*() const 
+{
+    string str;
+    TrieNode<T>* p = this->ptr_t;
+    while (p->key !='#')
+    {
+     str += p->key;
+     p = p->getParent(); 
+    }
+    reverse(str.begin(),str.end());
+    return str;
+}
 
 /*template <typename T>
 trie_iterator<T>::bool operator==(const trie_iterator<T> &, const trie_iterator<T> &)
