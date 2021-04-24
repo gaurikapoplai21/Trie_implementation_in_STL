@@ -12,7 +12,7 @@ private:
     // Private Methods
     TrieNode<T> *createNode(char key);
     TrieNode<T> *deleteNode(TrieNode<T> *root, string key, int depth = 0);
-    TrieNode<T> *recursive_destroy(TrieNode<T> *root);
+    void recursive_destroy(TrieNode<T> *root);
     int checksize(TrieNode<T> *root);
 
 public:
@@ -70,13 +70,13 @@ public:
 };
 
 template <typename T>
-TrieNode<T>* trie<T>::recursive_destroy(TrieNode<T> *root)
+void trie<T>::recursive_destroy(TrieNode<T> *root)
 {
     if (root->next.empty())
     {
         delete (root);
         root = nullptr;
-        return root;
+        return;
     }
     
     auto it = root->next.cbegin();
@@ -93,7 +93,6 @@ TrieNode<T>* trie<T>::recursive_destroy(TrieNode<T> *root)
         delete (root);
         root = nullptr;
     }
-    return root;
 }
 
 template <typename T>
