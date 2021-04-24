@@ -29,6 +29,24 @@ class trie{
             return ((this->insert(key))->value);
         }
 
+        void deepcopyroot(TrieNode<T>* a, TrieNode<T>* b){
+            for(auto x: a->next){
+                b->next[x.first] = createNode(x.first);
+                b->next[x.first]->addParent(b);
+                b->eow = a->eow;
+                b->value = a->value;
+                deepcopyroot(x.second, b->next[x.first]);
+            }
+        }
+
+        trie<T>& operator= (const trie<T> &x) {
+            if(this != &x){
+                this->capacity = x.capacity;
+                deepcopyroot(x.root, this->root);
+            }
+            return *this;
+        }
+
         TrieNode<T>* insert(string key, T value = T());
         bool contains(string key);
         void erase(string key);
