@@ -9,8 +9,9 @@ int main() {
     t["gaurika"] = "girl"; 
     cout << t.size() << endl;
     cout << t["gaurika"] << endl;
-    cout << t.find("joke") << endl;
+    cout << t.contains("gaurika") << endl;
     cout << t["joke"] << endl;
+    cout << t.contains("jok") << endl;
     t.erase("hellow");
     cout << t.size() << endl;
     return 0;

@@ -8,7 +8,7 @@ template<typename T>
 class TrieNode{
     public:
         map<char, TrieNode<T>*> next;
-        // char key;
+        char key;
         T value;
         bool eow;
 };
