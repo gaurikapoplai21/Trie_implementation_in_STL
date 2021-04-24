@@ -28,7 +28,8 @@ public:
      reverse_iterator rbegin();
      reverse_iterator rend();
 
-     iterator find(std::string);
+     iterator search(std::string);
+     iterator prefix_search(std::string);
 
      trie()
      {
@@ -269,7 +270,7 @@ int trie<T>::size()
  
 
  template <typename T>
- typename trie<T>::iterator trie<T>::find(std::string key)
+ typename trie<T>::iterator trie<T>::search(std::string key)
  {
     TrieNode<T>* t = this->root;
     for(int i=0;i<key.size();i++)
@@ -289,4 +290,24 @@ int trie<T>::size()
 
  }
 
- #endif
+ template <typename T>
+ typename trie<T>::iterator trie<T>::prefix_search(std::string key)
+ {
+     TrieNode<T> *t = this->root;
+     for (int i = 0; i < key.size(); i++)
+     {
+         if (t->next.find(key[i]) == t->next.end())
+         {
+             return this->end();
+         }
+         t = t->next[key[i]];
+     }
+     if (t != NULL)
+     {
+         iterator it(t);
+         return it;
+     }
+     return this->end();
+ }
+
+#endif

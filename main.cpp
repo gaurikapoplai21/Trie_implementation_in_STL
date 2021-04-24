@@ -40,11 +40,11 @@ int main() {
      }*/
 
      trie<int> t;
-     t.insert("hello");
+     //t.insert("hello");
      t.insert("helloworld");
      t.insert("hellz");
      //trie<int> :: iterator it = t.begin();
-     trie<int>::iterator it = t.find("helloz");
+     trie<int>::iterator it = t.search("hello");
      if(it != t.end())
      {
          cout<<*it;
@@ -52,6 +52,15 @@ int main() {
      else
      {
          cout<<"not found";
+     }
+     trie<int>::iterator it2 = t.prefix_search("hello");
+     if (it2 != t.end())
+     {
+         cout << *it2;
+     }
+     else
+     {
+         cout << "not found";
      }
      //trie<int> t1; 
      /*trie<int>::iterator it = t.begin();
