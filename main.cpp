@@ -3,10 +3,10 @@
 using namespace std;
 
 int main() {
-    {
-        trie<string> t;
-        t["hello"] = "hey";
-        t["helloworld"] = "whoa";
+    
+        //trie<string> t;
+        //t["hello"] = "hey";
+        //t["helloworld"] = "whoa";
         // t["gaurika"] = "girl";
         // cout << t.size() << endl;
         // cout << t["gaurika"] << endl;
@@ -15,9 +15,9 @@ int main() {
         // cout << t.contains("jok") << endl;
         // t1 = t;
         // t.erase("hello");
-        cout << t.size() << endl;
+        //cout << t.size() << endl;
         // cout << t1.size() << endl;
-    }
+    
 
     // TrieNode<string> root;
     // root.key = 'a';
@@ -32,12 +32,16 @@ int main() {
     //iterator copy assignement
     //*
     // == !=
-    
-    // Trie<int>::iterator it = t.begin();
-    // for (it; it != it.end;it++)
-    // {
-    //     cout<<*it<<" ";
-    // }
+     //Trie
+     /*Trie<int>::iterator it = t.begin();
+     for (it; it != it.end;it++)
+     {
+         cout<<*it<<" ";
+     }*/
+
+     trie<int> t;
+     t.insert("hello");
+     trie<int> :: iterator it = t.begin(); 
 
     return 0;
 }

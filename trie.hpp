@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "trienode.hpp"
+#include "trie_iterator.hpp"
 using namespace std;
 
 template <typename T>
@@ -16,11 +17,11 @@ private:
     int checksize(TrieNode<T> *root);
 
 public:
-    // using iterator = trie_iterator<T>;
+     using iterator = trie_iterator<T>;
 
     // begin and end objects of template class trie_iterator
-    // iterator begin();
-    // iterator end();
+     iterator begin();
+     iterator end();
 
     trie()
     {
@@ -198,12 +199,27 @@ int trie<T>::size()
     return checksize(root);
 }
 
-// template<typename T> trie<T> :: begin()
-// {
+/*template <typename T>
+typename trie<T>::iterator trie<T>::begin()
+{
+    trie_iterator<T> it = *(new trie_iterator<T>(this->root));
+    return ++it;
+}*/
 
-// }
+ template<typename T> typename trie<T> :: iterator trie<T> :: begin()
+ {
+     
+     TrieNode<T>* ptr = this->root;
+     while(ptr->eow != true)
+     {
+         ptr = ptr->next.begin()->second;
+     }
+     cout<<ptr->key;
+     iterator it(ptr);
+     return it;
+ }
 
-// template<typename T> trie<T>::end()
-// {
+ /*template<typename T> iterator trie<T>::end()
+ {
 
-// }
+ }*/
