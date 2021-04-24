@@ -3,37 +3,41 @@
 using namespace std;
 
 int main() {
-    trie<string> t;
-    t["hello"] = "hey";
-    t["helloworld"] = "whoa";
-    t["gaurika"] = "girl";
-    cout << t.size() << endl;
-    cout << t["gaurika"] << endl;
-    cout << t.contains("gaurika") << endl;
-    cout << t["joke"] << endl;
-    cout << t.contains("jok") << endl;
-    t.erase("hellow");
-    cout << t.size() << endl;
+    {
+        trie<string> t, t1;
+        t["hello"] = "hey";
+        t["helloworld"] = "whoa";
+        t["gaurika"] = "girl";
+        // cout << t.size() << endl;
+        // cout << t["gaurika"] << endl;
+        // cout << t.contains("gaurika") << endl;
+        // cout << t["joke"] << endl;
+        // cout << t.contains("jok") << endl;
+        // t1 = t;
+        // t.erase("hello");
+        cout << t.size() << endl;
+        // cout << t1.size() << endl;
+    }
 
-    TrieNode<string> root;
-    root.key = 'a';
-    root.next[root.key] = new TrieNode<string>();
-    root.next[root.key]->key='b';
-    root.next[root.key]->addParent(&root);
-    cout<<root.key<<"\n";
-    cout<<root.next[root.key]->key<<"\n";
-    TrieNode<string> *temp = root.next[root.key];
-    cout<<temp->getParent()->key<<"\n";
+    // TrieNode<string> root;
+    // root.key = 'a';
+    // root.next[root.key] = new TrieNode<string>();
+    // root.next[root.key]->key='b';
+    // root.next[root.key]->addParent(&root);
+    // cout<<root.key<<"\n";
+    // cout<<root.next[root.key]->key<<"\n";
+    // TrieNode<string> *temp = root.next[root.key];
+    // cout<<temp->getParent()->key<<"\n";
     
     //iterator copy assignement
     //*
     // == !=
     
-    Trie<int>::iterator it = t.begin();
-    for (it; it != it.end;it++)
-    {
-        cout<<*it<<" ";
-    }
+    // Trie<int>::iterator it = t.begin();
+    // for (it; it != it.end;it++)
+    // {
+    //     cout<<*it<<" ";
+    // }
 
-        return 0;
+    return 0;
 }

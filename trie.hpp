@@ -8,12 +8,12 @@ class trie
 private:
     // Private Members
     TrieNode<T> *root;
-    int capacity;
+    // int capacity;
 
     // Private Methods
     TrieNode<T> *createNode(char key);
     TrieNode<T> *deleteNode(TrieNode<T> *root, string key, int depth = 0);
-    void recursive_destroy(TrieNode<T> *root);
+    TrieNode<T> *recursive_destroy(TrieNode<T> *root);
     int checksize(TrieNode<T> *root);
 
 public:
@@ -26,16 +26,18 @@ public:
     trie()
     {
         root = this->createNode('#');
-        capacity = 0;
+        // capacity = 0;
     }
+
     ~trie()
     {
         TrieNode<T> *parse = this->root;
         recursive_destroy(root);
-        delete (root);
-        this->capacity--;
-        cout << this->size() << "\n";
+        // delete (root);
+        // this->capacity--;
+        // cout << "HERE-> " << this->size() << "\n";
     }
+
     T &operator[](string key)
     {
         return ((this->insert(key))->value);
@@ -71,29 +73,19 @@ public:
 };
 
 template <typename T>
-void trie<T>::recursive_destroy(TrieNode<T> *root)
+TrieNode<T>* trie<T>::recursive_destroy(TrieNode<T> *root)
 {
     if (root->next.size() == 0)
     {
         delete (root);
         root = nullptr;
-        this->capacity--;
-        return;
+        return root;
     }
     for (auto it : root->next)
     {
-        recursive_destroy(it.second);
-        cout << it.first << " ";
+        root->next[it.first] = recursive_destroy(it.second);
     }
-
-    /*
-    auto it = root->next.begin();
-    for (it; it != root->next.end(); it++)
-    {
-        recursive_destroy(it.second);
-        cout << it.second << " ";
-    }
-    */
+    return root;
 }
 
 template <typename T>
@@ -119,8 +111,8 @@ TrieNode<T> *trie<T>::insert(string key, T value)
         }
         parse = parse->next[key[i]];
     }
-    if (!parse->eow)
-        this->capacity++;
+    // if (!parse->eow)
+    //     this->capacity++;
     parse->eow = 1;
     return parse;
 }
@@ -187,15 +179,14 @@ bool trie<T>::empty()
 template <typename T>
 int trie<T>::checksize(TrieNode<T> *root)
 {
-    if (root->eow)
-        return 1;
     int t = 0;
+    if (root->eow)
+        t = 1;
     for (auto a : root->next)
     {
         t += checksize(a.second);
     }
     return t;
-    // return this->capacity;
 }
 
 template <typename T>
