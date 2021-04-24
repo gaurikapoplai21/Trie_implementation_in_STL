@@ -211,12 +211,34 @@ typename trie<T>::iterator trie<T>::begin()
      {
          ptr = ptr->next.begin()->second;
      }
-     cout<<ptr->key;
+     //cout<<ptr->key<<" ";
      iterator it(ptr);
      return it;
  }
 
- /*template<typename T> iterator trie<T>::end()
+ template <typename T>
+ typename trie<T>::iterator trie<T>::end()
  {
+     TrieNode<T> *ptr = this->root;
+     if(this->root->next.empty())
+     {
+         iterator it(root->next.begin()->second);
+         cout << root->next.begin()->first;
+         return it;
+     }
+     auto it  = ptr->next.end();
+     --it;
+     ptr = it->second;
+     //cout<<ptr->key<<" ";
+     while(!ptr->next.empty())
+     {
+         ptr = ptr->next.begin()->second;
+     }
+     //cout << ptr->key;
+     cout<<ptr->next.begin()->first;
+     ptr = ptr->next.begin()->second;
+     iterator it2(ptr);
+     return it2;
+ }
 
- }*/
+ 

@@ -41,7 +41,11 @@ int main() {
 
      trie<int> t;
      t.insert("hello");
-     trie<int> :: iterator it = t.begin(); 
+     t.insert("helloworld");
+     //t.insert("prithwish");
+
+     
+     trie<int> :: iterator it = t.end(); 
 
     return 0;
 }
