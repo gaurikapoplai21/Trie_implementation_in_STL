@@ -4,10 +4,10 @@ using namespace std;
 
 int main() {
     {
-        trie<string> t, t1;
+        trie<string> t;
         t["hello"] = "hey";
         t["helloworld"] = "whoa";
-        t["gaurika"] = "girl";
+        // t["gaurika"] = "girl";
         // cout << t.size() << endl;
         // cout << t["gaurika"] << endl;
         // cout << t.contains("gaurika") << endl;
