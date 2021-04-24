@@ -43,18 +43,35 @@ int main() {
      t.insert("hello");
      t.insert("helloworld");
      t.insert("hellz");
+     //trie<int> :: iterator it = t.begin();
+     trie<int>::iterator it = t.find("helloz");
+     if(it != t.end())
+     {
+         cout<<*it;
+     }
+     else
+     {
+         cout<<"not found";
+     }
      //trie<int> t1; 
-     trie<int>::iterator it = t.begin();
+     /*trie<int>::iterator it = t.begin();
      bool x = t.begin() == t.begin();
      cout<< (t.begin()==t.end());
-     cout<<*t.begin()<<" "<<t.end();
-     //cout<<t.begin()==t.end();
-     /*for(it; it!=t.end() ;it++)
+     cout<<*t.begin()<<" "<<t.end();*/
+
+    // trie<int>::iterator it = t.rbegin();
+     //cout<<*it<<" ";
+
+     //trie<int>::reverse_iterator it2 = t.rend();
+     //cout<<*it2;
+
+    
+    /*for(it; it!=t.end() ;it++)
      {
          cout<<*it<<" ";
      }*/
-    
-     //trie<int> :: iterator it = t.end(); 
+
+    //trie<int> :: iterator it = t.end(); 
 
     return 0;
 }

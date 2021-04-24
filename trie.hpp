@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#ifndef TRIE_H
+#define TRIE_H
 #include "trienode.hpp"
 #include "trie_iterator.hpp"
 using namespace std;
@@ -19,14 +20,19 @@ private:
 
 public:
      using iterator = trie_iterator<T>;
+     using reverse_iterator = std::reverse_iterator<iterator>;
 
-    // begin and end objects of template class trie_iterator
+     // begin and end objects of template class trie_iterator
      iterator begin();
      iterator end();
+     reverse_iterator rbegin();
+     reverse_iterator rend();
 
-    trie()
-    {
-        root = this->createNode('#');
+     iterator find(std::string);
+
+     trie()
+     {
+         root = this->createNode('#');
     }
 
     ~trie()
@@ -231,11 +237,56 @@ int trie<T>::size()
          --i;
          ptr = i->second;
      }
-     cout << ptr->key;
+     //cout << ptr->key;
      //cout<<ptr->next.begin()->first;
      ptr = ptr->next.begin()->second;
      iterator it2(ptr);
      return it2;
  }
 
+ /*template <typename T>
+ typename trie<T>::reverse_iterator trie<T>::rbegin()
+ {    
+     
+     TrieNode<T>* t = this->end().ptr_t;
+     --t;
+     cout<<t->key;
+     iterator k(t);
+     reverse_iterator res = k;
+     return res;
+ }*/
+
+ /*template <typename T>
+ typename trie<T>::reverse_iterator trie<T>::rend()
+ {   
+     iterator it(this->root);
+     reverse_iterator res = reverse_iterator(it);
+    // return trie<T>::reverse_iterator(trie<T>::begin());
+ }*/
+
  
+
+ 
+
+ template <typename T>
+ typename trie<T>::iterator trie<T>::find(std::string key)
+ {
+    TrieNode<T>* t = this->root;
+    for(int i=0;i<key.size();i++)
+    {
+        if (t->next.find(key[i]) == t->next.end())
+        {
+            return this->end();
+        }
+        t = t->next[key[i]];
+    }
+    if (t != NULL && t->eow)
+    {   
+        iterator it(t);
+        return it;
+    }
+    return this->end();
+
+ }
+
+ #endif

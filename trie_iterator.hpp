@@ -10,6 +10,10 @@ private:
 
 public:
     using iterator_category = std::bidirectional_iterator_tag;
+    using difference_type = std::ptrdiff_t;
+    using value_type = T;
+    using pointer = value_type *;
+    using reference = value_type &;
 
     trie_iterator();                          //default ctor
     explicit trie_iterator(TrieNode<T> *ptr); //parameterized ctor
@@ -42,7 +46,7 @@ public:
     }
     friend ostream &operator<<(ostream &o, const trie_iterator<T> &rhs)
     {
-        o << rhs.ptr_t;
+        return o << rhs.ptr_t;
     }
 };
 
