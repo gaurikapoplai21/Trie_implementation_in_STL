@@ -43,9 +43,17 @@ int main() {
      t.insert("hello");
      t.insert("helloworld");
      t.insert("hellz");
-
-     trie<int>::iterator it = t.end();
-     cout<<*it;
+     //trie<int> t1; 
+     trie<int>::iterator it = t.begin();
+     bool x = t.begin() == t.begin();
+     cout<< (t.begin()==t.end());
+     cout<<*t.begin()<<" "<<t.end();
+     //cout<<t.begin()==t.end();
+     /*for(it; it!=t.end() ;it++)
+     {
+         cout<<*it<<" ";
+     }*/
+    
      //trie<int> :: iterator it = t.end(); 
 
     return 0;

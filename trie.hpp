@@ -196,12 +196,7 @@ int trie<T>::size()
     return checksize(root);
 }
 
-/*template <typename T>
-typename trie<T>::iterator trie<T>::begin()
-{
-    trie_iterator<T> it = *(new trie_iterator<T>(this->root));
-    return ++it;
-}*/
+
 
  template<typename T> typename trie<T> :: iterator trie<T> :: begin()
  {
@@ -237,7 +232,7 @@ typename trie<T>::iterator trie<T>::begin()
          ptr = i->second;
      }
      cout << ptr->key;
-     cout<<ptr->next.begin()->first;
+     //cout<<ptr->next.begin()->first;
      ptr = ptr->next.begin()->second;
      iterator it2(ptr);
      return it2;

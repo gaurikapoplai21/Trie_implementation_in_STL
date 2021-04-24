@@ -9,6 +9,8 @@ private:
     TrieNode<T> *ptr_t;
 
 public:
+    using iterator_category = std::bidirectional_iterator_tag;
+
     trie_iterator();                          //default ctor
     explicit trie_iterator(TrieNode<T> *ptr); //parameterized ctor
     
@@ -22,20 +24,26 @@ public:
     ~trie_iterator() = default;
 
     //operator functions
-    trie_iterator<T> operator++(int) = delete;        //post
-    trie_iterator<T> *operator++() = delete; //tbd pre
-    trie_iterator<T> operator--(int);        //post
-    trie_iterator<T> operator--() = delete;  //tbd pre
+    trie_iterator<T> operator++(int);  
+    trie_iterator<T> *operator++();
+    trie_iterator<T> operator--(int);        
+    trie_iterator<T> operator--();
     string operator*() const;
-    //T operator->() const;
+    //T operator->() const;   //TBD
 
     //friend functions
-    friend bool operator==(const trie_iterator<T> &, const trie_iterator<T> &);
-    friend bool operator!=(const trie_iterator<T> &, const trie_iterator<T> &);
-    friend bool operator>=(const trie_iterator<T> &, const trie_iterator<T> &);
-    friend bool operator<=(const trie_iterator<T> &, const trie_iterator<T> &);
-    friend bool operator<(const trie_iterator<T> &, const trie_iterator<T> &);
-    friend bool operator>(const trie_iterator<T> &, const trie_iterator<T> &);
+    friend bool operator==(const trie_iterator<T>& one, const trie_iterator<T>& two)
+    {
+        return one.ptr_t == two.ptr_t;
+    }
+    friend bool operator!=(const trie_iterator<T>& one, const trie_iterator<T>& two)
+    {
+         return !(one == two);
+    }
+    friend ostream &operator<<(ostream &o, const trie_iterator<T> &rhs)
+    {
+        o << rhs.ptr_t;
+    }
 };
 
 template <typename T>
@@ -76,14 +84,13 @@ string trie_iterator<T>::operator*() const
 }
 
 /*template <typename T>
-trie_iterator<T>::bool operator==(const trie_iterator<T> &, const trie_iterator<T> &)
+typename trie_iterator<T>::trie_iterator<T>::operator++()
 {
-}
-
-template <typename T>
-trie_iterator<T>::bool operator!=(const trie_iterator<T> &one, const trie_iterator<T> &two)
-{
-    return !(one == two);
+    trie_iterator<T> temp(this);
+    this->ptr_t = this->ptr_t->next.begin()->second;
+    return temp;
 }*/
+   
+
 
 #endif
