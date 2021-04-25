@@ -76,6 +76,7 @@ template<typename T>
 string trie_iterator<T>::operator*() const 
 {
     string str;
+    if(!this->ptr_t->eow) return str;
     TrieNode<T>* p = this->ptr_t;
     while (p->key !='#')
     {
@@ -88,6 +89,10 @@ string trie_iterator<T>::operator*() const
 
 template<typename T>
 trie_iterator<T> &trie_iterator<T>::operator++() {
+    
+    if(this->ptr_t->key == char()) return *this;
+    if(this->ptr_t->next.find(char()) != this->ptr_t->next.end()) {this->ptr_t = (*(this->ptr_t->next.begin())).second; return *this;}
+
     if(this->ptr_t->next.empty()) {
         // Get Parent
         auto parse = this->ptr_t;
@@ -100,10 +105,10 @@ trie_iterator<T> &trie_iterator<T>::operator++() {
             parse = parse->getParent();
         }
         
-        if(!parse) {
-            this->ptr_t = (*(this->ptr_t->next.begin())).second;
-            return *this;
-        }
+        // if(!parse) {
+        //     this->ptr_t = (*(this->ptr_t->next.begin())).second;
+        //     return *this;
+        // }
 
         this->ptr_t = parse;
         if(parse->eow) {
@@ -145,12 +150,13 @@ trie_iterator<T> &trie_iterator<T>::operator--() {
     return *this;
 }
 
-/*template <typename T>
-typename trie_iterator<T>::trie_iterator<T>::operator++()
+template <typename T>
+trie_iterator<T> trie_iterator<T>::operator++(int)
 {
-    trie_iterator<T> temp(this);
-    this->ptr_t = this->ptr_t->next.begin()->second;
+    trie_iterator<T> temp(*this);
+    ++(*this);
+    // this->ptr_t = this->ptr_t->next.begin()->second;
     return temp;
-}*/
+}
 
 #endif

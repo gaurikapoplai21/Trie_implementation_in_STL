@@ -18,7 +18,7 @@ private:
     void recursive_destroy(TrieNode<T> *root);
     void deepcopyroot(TrieNode<T> *a, TrieNode<T> *b);
     int checksize(TrieNode<T> *root);
-    void updateEnd();
+    void updateEnd(bool rem);
 
 public:
      using iterator = trie_iterator<T>;
@@ -116,6 +116,8 @@ TrieNode<T> *trie<T>::createNode(char key)
 template <typename T>
 TrieNode<T> *trie<T>::insert(string key, T value)
 {
+    updateEnd(1);
+    // cout << "lol" << endl;
     TrieNode<T> *parse = this->root;
     for (int i = 0; i < key.size(); i++)
     {
@@ -126,8 +128,14 @@ TrieNode<T> *trie<T>::insert(string key, T value)
         }
         parse = parse->next[key[i]];
     }
+    // cout << "jk" <<endl;
+    // cout << parse->key << endl;
+    // cout << (parse->next.find(char()) != parse->next.end()) << endl;
     parse->eow = 1;
-    updateEnd();
+    updateEnd(0);
+    // cout << parse->key << endl;
+    // cout << (parse->next.find(char()) != parse->next.end()) << endl;
+    // cout << "kl" << endl;
     return parse;
 }
 
@@ -208,12 +216,22 @@ int trie<T>::size()
 }
 
 template <typename T>
-void trie<T>::updateEnd() {
+void trie<T>::updateEnd(bool rem) {
     TrieNode<T> *parse = this->root;
-    while(!parse->next.empty()) {
+    while(parse->next.find(char()) == parse->next.end() and !parse->next.empty()) {
+        // cout << parse->key << endl;
         parse = (*(parse->next.rbegin())).second;
     }
-    this->end_->parent = parse;
+    // cout << "-->"<<parse->key << endl;
+    if(rem) {
+        parse->next.clear();
+        this->end_->parent = nullptr;
+    }
+    else {
+        parse->next[char()] = this->end_;
+        this->end_->parent = parse;
+        // cout << this->end_->parent->key << endl;
+    }
 }
 
 
