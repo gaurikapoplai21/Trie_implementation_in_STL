@@ -10,6 +10,7 @@ class trie
 private:
     // Private Members
     TrieNode<T> *root;
+    TrieNode<T> *end_;
 
     // Private Methods
     TrieNode<T> *createNode(char key);
@@ -17,6 +18,7 @@ private:
     void recursive_destroy(TrieNode<T> *root);
     void deepcopyroot(TrieNode<T> *a, TrieNode<T> *b);
     int checksize(TrieNode<T> *root);
+    void updateEnd();
 
 public:
      using iterator = trie_iterator<T>;
@@ -34,6 +36,7 @@ public:
      trie()
      {
          root = this->createNode('#');
+         end_ = this->createNode(char());
     }
 
     ~trie()
@@ -124,6 +127,7 @@ TrieNode<T> *trie<T>::insert(string key, T value)
         parse = parse->next[key[i]];
     }
     parse->eow = 1;
+    updateEnd();
     return parse;
 }
 
@@ -203,6 +207,14 @@ int trie<T>::size()
     return checksize(root);
 }
 
+template <typename T>
+void trie<T>::updateEnd() {
+    TrieNode<T> *parse = this->root;
+    while(!parse->next.empty()) {
+        parse = (*(parse->next.rbegin())).second;
+    }
+    this->end_->parent = parse;
+}
 
 
  template<typename T> typename trie<T> :: iterator trie<T> :: begin()
@@ -221,7 +233,7 @@ int trie<T>::size()
  template <typename T>
  typename trie<T>::iterator trie<T>::end()
  {
-     TrieNode<T> *ptr = this->root;
+     /*TrieNode<T> *ptr = this->root;
      if(this->root->next.empty())
      {
          iterator it(root->next.begin()->second);
@@ -240,8 +252,8 @@ int trie<T>::size()
      }
      //cout << ptr->key;
      //cout<<ptr->next.begin()->first;
-     ptr = ptr->next.begin()->second;
-     iterator it2(ptr);
+     ptr = ptr->next.begin()->second;*/
+     iterator it2(this->end_);
      return it2;
  }
 
@@ -261,13 +273,10 @@ int trie<T>::size()
  typename trie<T>::reverse_iterator trie<T>::rend()
  {   
      iterator it(this->root);
-     reverse_iterator res = reverse_iterator(it);
+     reverse_iterator res(it);//reverse_iterator(it);
+     return res;
     // return trie<T>::reverse_iterator(trie<T>::begin());
  }*/
-
- 
-
- 
 
  template <typename T>
  typename trie<T>::iterator trie<T>::search(std::string key)
@@ -287,7 +296,6 @@ int trie<T>::size()
         return it;
     }
     return this->end();
-
  }
 
  template <typename T>

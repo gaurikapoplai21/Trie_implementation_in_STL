@@ -66,12 +66,11 @@ template <typename T>
 trie_iterator<T> trie_iterator<T>:: operator=(const trie_iterator<T> & rhs) 
 {
     this->ptr_t = rhs->ptr_t;
-
 }
 
 //copy ctor
 template <typename T>
-trie_iterator<T>::trie_iterator(const trie_iterator<T>& rhs) : ptr_t(rhs.ptr_t){ }
+trie_iterator<T>::trie_iterator(const trie_iterator<T>& rhs) : ptr_t(rhs.ptr_t) { }
 
 template<typename T>
 string trie_iterator<T>::operator*() const 
@@ -118,10 +117,33 @@ trie_iterator<T> &trie_iterator<T>::operator++() {
     return *this;
 }
 
-// template<typename T>
-// trie_iterator<T> &trie_iterator<T>::operator--() {
+template<typename T>
+trie_iterator<T> &trie_iterator<T>::operator--() {
+    auto parse = this->ptr_t;
+    char temp = parse->key;
+    parse = parse->getParent();
+    // cout << parse->key << endl;
+    while(parse) {
+        if(parse->eow) {
+            this->ptr_t = parse;
+            return *this;
+        }
+        auto it = parse->next.find(temp);
+        if(it != parse->next.begin()) {cout << it->first << endl;--it; parse = it->second; break;}
+        temp = parse->key;
+        parse = parse->getParent();
+    }
+    
+    if(!parse) return *this;
 
-// }
+    this->ptr_t = parse;
+
+    do {
+        this->ptr_t = (*(this->ptr_t->next.rbegin())).second;
+    } while(!this->ptr_t->next.empty());
+
+    return *this;
+}
 
 /*template <typename T>
 typename trie_iterator<T>::trie_iterator<T>::operator++()
