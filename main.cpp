@@ -40,28 +40,35 @@ int main() {
      }*/
 
      trie<int> t;
-     //t.insert("hello");
+     t.insert("hello");
      t.insert("helloworld");
-     t.insert("hellz");
-     //trie<int> :: iterator it = t.begin();
-     trie<int>::iterator it = t.search("hello");
-     if(it != t.end())
-     {
-         cout<<*it;
+     t.insert("helluz");
+     t.insert("helluza");
+     t.insert("helluzb");
+     trie<int> :: iterator it = t.begin();
+     for(auto i: t) {
+         cout << i << endl;
      }
-     else
-     {
-         cout<<"not found";
-     }
-     trie<int>::iterator it2 = t.prefix_search("hello");
-     if (it2 != t.end())
-     {
-         cout << *it2;
-     }
-     else
-     {
-         cout << "not found";
-     }
+     trie<int> :: iterator it1 = t.end();
+    //  cout << *it << endl;
+    //  trie<int>::iterator it = t.search("hello");
+    //  if(it != t.end())
+    //  {
+    //      cout<<*it;
+    //  }
+    //  else
+    //  {
+    //      cout<<"not found";
+    //  }
+    //  trie<int>::iterator it2 = t.prefix_search("hello");
+    //  if (it2 != t.end())
+    //  {
+    //      cout << *it2;
+    //  }
+    //  else
+    //  {
+    //      cout << "not found";
+    //  }
      //trie<int> t1; 
      /*trie<int>::iterator it = t.begin();
      bool x = t.begin() == t.begin();

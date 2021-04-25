@@ -29,9 +29,9 @@ public:
 
     //operator functions
     trie_iterator<T> operator++(int);  
-    trie_iterator<T> *operator++();
+    trie_iterator<T> &operator++();
     trie_iterator<T> operator--(int);        
-    trie_iterator<T> operator--();
+    trie_iterator<T> &operator--();
     string operator*() const;
     //T operator->() const;   //TBD
 
@@ -87,6 +87,42 @@ string trie_iterator<T>::operator*() const
     return str;
 }
 
+template<typename T>
+trie_iterator<T> &trie_iterator<T>::operator++() {
+    if(this->ptr_t->next.empty()) {
+        // Get Parent
+        auto parse = this->ptr_t;
+        auto temp = parse->key;
+        parse = parse->getParent();
+        while(parse) {
+            auto it = parse->next.find(temp); ++it;
+            if(it != parse->next.end()) {parse = it->second; break;}
+            temp = parse->key;
+            parse = parse->getParent();
+        }
+        
+        if(!parse) {
+            this->ptr_t = (*(this->ptr_t->next.begin())).second;
+            return *this;
+        }
+
+        this->ptr_t = parse;
+        if(parse->eow) {
+            return *this;
+        } 
+    }
+    // Get First Child
+    do {
+        this->ptr_t = (*(this->ptr_t->next.begin())).second;
+    } while(!this->ptr_t->eow);
+    return *this;
+}
+
+// template<typename T>
+// trie_iterator<T> &trie_iterator<T>::operator--() {
+
+// }
+
 /*template <typename T>
 typename trie_iterator<T>::trie_iterator<T>::operator++()
 {
@@ -94,7 +130,5 @@ typename trie_iterator<T>::trie_iterator<T>::operator++()
     this->ptr_t = this->ptr_t->next.begin()->second;
     return temp;
 }*/
-   
-
 
 #endif
