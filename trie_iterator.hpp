@@ -35,18 +35,17 @@ public:
     string operator*() const;
     //T operator->() const;   //TBD
 
-    char getKey();
-    T getValue();
-
     //friend functions
     friend bool operator==(const trie_iterator<T>& one, const trie_iterator<T>& two)
     {
         return one.ptr_t == two.ptr_t;
     }
+    
     friend bool operator!=(const trie_iterator<T>& one, const trie_iterator<T>& two)
     {
          return !(one == two);
     }
+    
     friend ostream &operator<<(ostream &o, const trie_iterator<T> &rhs)
     {
         return o << rhs.ptr_t;
@@ -68,7 +67,7 @@ trie_iterator<T>::trie_iterator(TrieNode<T> *ptr) : ptr_t(ptr)
 template <typename T>
 trie_iterator<T> trie_iterator<T>:: operator=(const trie_iterator<T> & rhs) 
 {
-    this->ptr_t = rhs->ptr_t;
+    this->ptr_t = rhs.ptr_t;
 }
 
 //copy ctor
@@ -89,16 +88,6 @@ string trie_iterator<T>::operator*() const
     reverse(str.begin(),str.end());
     return str;
 }
-template<typename T>
-char trie_iterator<T>::getKey() {
-    return this->ptr_t->getKey();
-} 
-
-template<typename T>
-T trie_iterator<T>::getValue() {
-    return this->ptr_t->value;
-}
-
 
 template<typename T>
 trie_iterator<T> &trie_iterator<T>::operator++() {
@@ -117,11 +106,6 @@ trie_iterator<T> &trie_iterator<T>::operator++() {
             temp = parse->key;
             parse = parse->getParent();
         }
-        
-        // if(!parse) {
-        //     this->ptr_t = (*(this->ptr_t->next.begin())).second;
-        //     return *this;
-        // }
 
         this->ptr_t = parse;
         if(parse->eow) {
@@ -137,17 +121,18 @@ trie_iterator<T> &trie_iterator<T>::operator++() {
 
 template<typename T>
 trie_iterator<T> &trie_iterator<T>::operator--() {
+    
     auto parse = this->ptr_t;
     char temp = parse->key;
     parse = parse->getParent();
-    // cout << parse->key << endl;
+    if(temp == char()) {this->ptr_t = parse;return *this;}
     while(parse) {
+        auto it = parse->next.find(temp);
+        if(it != parse->next.begin()) {--it; parse = it->second; break;}
         if(parse->eow) {
             this->ptr_t = parse;
             return *this;
         }
-        auto it = parse->next.find(temp);
-        if(it != parse->next.begin()) {cout << it->first << endl;--it; parse = it->second; break;}
         temp = parse->key;
         parse = parse->getParent();
     }
@@ -156,9 +141,9 @@ trie_iterator<T> &trie_iterator<T>::operator--() {
 
     this->ptr_t = parse;
 
-    do {
+    while(!this->ptr_t->next.empty()) {
         this->ptr_t = (*(this->ptr_t->next.rbegin())).second;
-    } while(!this->ptr_t->next.empty());
+    }
 
     return *this;
 }
@@ -168,7 +153,14 @@ trie_iterator<T> trie_iterator<T>::operator++(int)
 {
     trie_iterator<T> temp(*this);
     ++(*this);
-    // this->ptr_t = this->ptr_t->next.begin()->second;
+    return temp;
+}
+
+template <typename T>
+trie_iterator<T> trie_iterator<T>::operator--(int)
+{
+    trie_iterator<T> temp(*this);
+    --(*this);
     return temp;
 }
 

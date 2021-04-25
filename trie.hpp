@@ -117,7 +117,6 @@ template <typename T>
 TrieNode<T> *trie<T>::insert(string key, T value)
 {
     updateEnd(1);
-    // cout << "lol" << endl;
     TrieNode<T> *parse = this->root;
     for (int i = 0; i < key.size(); i++)
     {
@@ -128,14 +127,8 @@ TrieNode<T> *trie<T>::insert(string key, T value)
         }
         parse = parse->next[key[i]];
     }
-    // cout << "jk" <<endl;
-    // cout << parse->key << endl;
-    // cout << (parse->next.find(char()) != parse->next.end()) << endl;
     parse->eow = 1;
     updateEnd(0);
-    // cout << parse->key << endl;
-    // cout << (parse->next.find(char()) != parse->next.end()) << endl;
-    // cout << "kl" << endl;
     return parse;
 }
 
@@ -219,10 +212,8 @@ template <typename T>
 void trie<T>::updateEnd(bool rem) {
     TrieNode<T> *parse = this->root;
     while(parse->next.find(char()) == parse->next.end() and !parse->next.empty()) {
-        // cout << parse->key << endl;
         parse = (*(parse->next.rbegin())).second;
     }
-    // cout << "-->"<<parse->key << endl;
     if(rem) {
         parse->next.clear();
         this->end_->parent = nullptr;
@@ -230,77 +221,73 @@ void trie<T>::updateEnd(bool rem) {
     else {
         parse->next[char()] = this->end_;
         this->end_->parent = parse;
-        // cout << this->end_->parent->key << endl;
     }
 }
 
+template<typename T> typename trie<T> :: iterator trie<T> :: begin()
+{
+    TrieNode<T>* ptr = this->root;
+    while(ptr->eow != true)
+    {
+        ptr = ptr->next.begin()->second;
+    }
+    iterator it(ptr);
+    return it;
+}
 
- template<typename T> typename trie<T> :: iterator trie<T> :: begin()
- {
-     
-     TrieNode<T>* ptr = this->root;
-     while(ptr->eow != true)
-     {
-         ptr = ptr->next.begin()->second;
-     }
-     //cout<<ptr->key<<" ";
-     iterator it(ptr);
-     return it;
- }
+template <typename T>
+typename trie<T>::iterator trie<T>::end()
+{
+    iterator it2(this->end_);
+    return it2;
+}
 
- template <typename T>
- typename trie<T>::iterator trie<T>::end()
- {
-     /*TrieNode<T> *ptr = this->root;
-     if(this->root->next.empty())
-     {
-         iterator it(root->next.begin()->second);
-         cout << root->next.begin()->first;
-         return it;
-     }
-     auto it  = ptr->next.end();
-     --it;
-     ptr = it->second;
-     //cout<<ptr->key<<" ";
-     while(!ptr->next.empty())
-     {
-         auto i = ptr->next.end();
-         --i;
-         ptr = i->second;
-     }
-     //cout << ptr->key;
-     //cout<<ptr->next.begin()->first;
-     ptr = ptr->next.begin()->second;*/
-     iterator it2(this->end_);
-     return it2;
- }
+/*template <typename T>
+typename trie<T>::reverse_iterator trie<T>::rbegin()
+{    
+    
+    TrieNode<T>* t = this->end().ptr_t;
+    --t;
+    cout<<t->key;
+    iterator k(t);
+    reverse_iterator res = k;
+    return res;
+}*/
 
- /*template <typename T>
- typename trie<T>::reverse_iterator trie<T>::rbegin()
- {    
-     
-     TrieNode<T>* t = this->end().ptr_t;
-     --t;
-     cout<<t->key;
-     iterator k(t);
-     reverse_iterator res = k;
-     return res;
- }*/
+/*template <typename T>
+typename trie<T>::reverse_iterator trie<T>::rend()
+{   
+    iterator it(this->root);
+    reverse_iterator res(it);//reverse_iterator(it);
+    return res;
+// return trie<T>::reverse_iterator(trie<T>::begin());
+}*/
 
- /*template <typename T>
- typename trie<T>::reverse_iterator trie<T>::rend()
- {   
-     iterator it(this->root);
-     reverse_iterator res(it);//reverse_iterator(it);
-     return res;
-    // return trie<T>::reverse_iterator(trie<T>::begin());
- }*/
+template <typename T>
+typename trie<T>::iterator trie<T>::search(std::string key)
+{
+TrieNode<T>* t = this->root;
+for(int i=0;i<key.size();i++)
+{
+    if (t->next.find(key[i]) == t->next.end())
+    {
+        return this->end();
+    }
+    t = t->next[key[i]];
+}
+if (t != NULL && t->eow)
+{   
+    iterator it(t);
+    return it;
+}
+return this->end();
+}
 
- template <typename T>
- typename trie<T>::iterator trie<T>::search(std::string key)
- {
-    TrieNode<T>* t = this->root;
-    for(int i=0;i<key.size();i++)
+template <typename T>
+typename trie<T>::iterator trie<T>::prefix_search(std::string key)
+{
+    TrieNode<T> *t = this->root;
+    for (int i = 0; i < key.size(); i++)
     {
         if (t->next.find(key[i]) == t->next.end())
         {
@@ -308,32 +295,12 @@ void trie<T>::updateEnd(bool rem) {
         }
         t = t->next[key[i]];
     }
-    if (t != NULL && t->eow)
-    {   
+    if (t != NULL)
+    {
         iterator it(t);
         return it;
     }
     return this->end();
- }
-
- template <typename T>
- typename trie<T>::iterator trie<T>::prefix_search(std::string key)
- {
-     TrieNode<T> *t = this->root;
-     for (int i = 0; i < key.size(); i++)
-     {
-         if (t->next.find(key[i]) == t->next.end())
-         {
-             return this->end();
-         }
-         t = t->next[key[i]];
-     }
-     if (t != NULL)
-     {
-         iterator it(t);
-         return it;
-     }
-     return this->end();
- }
+}
 
 #endif
