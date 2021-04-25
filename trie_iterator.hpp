@@ -33,6 +33,8 @@ public:
     trie_iterator<T> operator--(int);        
     trie_iterator<T> &operator--();
     string operator*() const;
+    char getKey();
+    T getValue();
     //T operator->() const;   //TBD
 
     //friend functions
@@ -162,6 +164,18 @@ trie_iterator<T> trie_iterator<T>::operator--(int)
     trie_iterator<T> temp(*this);
     --(*this);
     return temp;
+}
+
+template <typename T>
+char trie_iterator<T>::getKey()
+{
+    return this->ptr_t->getKey();
+}
+
+template <typename T>
+T trie_iterator<T>::getValue()
+{
+    return this->ptr_t->value;
 }
 
 #endif

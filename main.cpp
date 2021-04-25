@@ -25,13 +25,13 @@ int main() {
     t1.insert("helluzc");
     trie<int> :: iterator it = t.begin();
 
-    vector<string> a,b;
+    //vector<string> a,b;
 
     for(it = t.begin();it != t.end(); ++it) {
-        a.push_back(*it);
+        cout<<it.getKey()<<" ";
     }
 
-    for(it = t.end();it != t.begin(); --it) {
+   /* for(it = t.end();it != t.begin(); --it) {
         if(it != t.end()) b.push_back(*it);
     }
     b.push_back(*it);
@@ -52,5 +52,5 @@ int main() {
 
     // cout << (find(t.begin(), t.end(), "helluz") != t.end()) << endl;
 
-    return 0;
+    return 0;*/
 }
