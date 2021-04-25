@@ -35,6 +35,9 @@ public:
     string operator*() const;
     //T operator->() const;   //TBD
 
+    char getKey();
+    T getValue();
+
     //friend functions
     friend bool operator==(const trie_iterator<T>& one, const trie_iterator<T>& two)
     {
@@ -86,6 +89,16 @@ string trie_iterator<T>::operator*() const
     reverse(str.begin(),str.end());
     return str;
 }
+template<typename T>
+char trie_iterator<T>::getKey() {
+    return this->ptr_t->getKey();
+} 
+
+template<typename T>
+T trie_iterator<T>::getValue() {
+    return this->ptr_t->value;
+}
+
 
 template<typename T>
 trie_iterator<T> &trie_iterator<T>::operator++() {

@@ -16,6 +16,7 @@ int main() {
 
     for(;it != t.end(); ++it) {
         cout << *it << endl;
+        cout<<it.getKey()<<endl;
     }
 
     for(auto a: t) cout << a << " ";
