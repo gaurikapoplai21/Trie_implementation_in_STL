@@ -7,9 +7,11 @@ using namespace std;
 template <typename T>
 class TrieNode
 {
+
 public:
   map<char, TrieNode<T> *> next;
   char key;
+  // string fullkey;
   T value;
   bool eow;
   TrieNode<T> *parent;
@@ -18,26 +20,17 @@ public:
   char getKey();
   TrieNode<T> *getParent();
 
-  private:
+private:
   
 };
 
 template <typename T>
-void TrieNode<T>::addParent(TrieNode<T> *parent)
-{
-  this->parent = parent;
-}
+void TrieNode<T>::addParent(TrieNode<T> *parent) {this->parent = parent;}
 
 template <typename T>
-char TrieNode<T>::getKey()
-{
-  return this->key;
-}
+char TrieNode<T>::getKey() {return this->key;}
 
 template <typename T>
-TrieNode<T> *TrieNode<T>::getParent()
-{
-  return this->parent;
-}
+TrieNode<T> *TrieNode<T>::getParent() {return this->parent;}
 
 #endif

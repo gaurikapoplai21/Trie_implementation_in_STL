@@ -15,10 +15,9 @@ private:
     // Private Methods
     TrieNode<T> *createNode(char key);
     TrieNode<T> *deleteNode(TrieNode<T> *root, string key, int depth = 0);
-    void recursive_destroy(TrieNode<T> *root);
-    void deepcopyroot(TrieNode<T> *a, TrieNode<T> *b);
-    int checksize(TrieNode<T> *root);
-    void updateEnd(bool rem);
+    void recursiveDestroy(TrieNode<T> *root);
+    void deepCopyRoot(TrieNode<T> *a, TrieNode<T> *b);
+    int checkSize(TrieNode<T> *root);
 
 public:
      using iterator = trie_iterator<T>;
@@ -33,16 +32,18 @@ public:
      iterator search(std::string);
      iterator prefix_search(std::string);
 
-     trie()
-     {
-         root = this->createNode('#');
-         end_ = this->createNode(char());
+    trie()
+    {
+        root = this->createNode('#');
+        end_ = this->createNode(char());
+        end_->next['#'] = root;
+        root->parent = end_;
     }
 
     ~trie()
     {
         TrieNode<T> *parse = this->root;
-        recursive_destroy(root);
+        recursiveDestroy(root);
     }
 
     T &operator[](string key)
@@ -54,9 +55,12 @@ public:
     {
         if (this != &x)
         {
-            recursive_destroy(this->root);
+            recursiveDestroy(this->end_);
             this->root = this->createNode('#');
-            deepcopyroot(x.root, this->root);
+            this->end_ = this->createNode(char());
+            this->end_->next['#'] = this->root;
+            this->root->parent = this->end_;
+            deepCopyRoot(x.root, this->root);
         }
         return *this;
     }
@@ -66,7 +70,10 @@ public:
         if (this != &x)
         {
             this->root = this->createNode('#');
-            deepcopyroot(x.root, this->root);
+            end_ = this->createNode(char());
+            end_->next['#'] = root;
+            root->parent = end_;
+            deepCopyRoot(x.root, this->root);
         }
     }
 
@@ -78,7 +85,19 @@ public:
 };
 
 template <typename T>
-void trie<T>::recursive_destroy(TrieNode<T> *root)
+void trie<T>::deepCopyRoot(TrieNode<T> *a, TrieNode<T> *b) {
+    b->eow = a->eow;
+    b->key = a->key;
+    b->value = a->value;
+    for(auto x : a->next) {
+        b->next[x.first] = createNode(x.first);
+        b->next[x.first]->addParent(b);
+        deepCopyRoot(x.second, b->next[x.first]);
+    }
+}
+
+template <typename T>
+void trie<T>::recursiveDestroy(TrieNode<T> *root)
 {
     if (root->next.empty())
     {
@@ -91,7 +110,7 @@ void trie<T>::recursive_destroy(TrieNode<T> *root)
     while (it != root->next.cend())
     {
         if(root->next.find(it->first) != root->next.cend()) {
-            recursive_destroy(it->second);
+            recursiveDestroy(it->second);
             it = root->next.erase(it);
         } else ++it;
     }
@@ -107,6 +126,7 @@ template <typename T>
 TrieNode<T> *trie<T>::createNode(char key)
 {
     TrieNode<T> *node = new TrieNode<T>();
+    // node->fullkey = string();
     node->key = key;
     node->eow = 0;
     node->value = T();
@@ -116,7 +136,6 @@ TrieNode<T> *trie<T>::createNode(char key)
 template <typename T>
 TrieNode<T> *trie<T>::insert(string key, T value)
 {
-    updateEnd(1);
     TrieNode<T> *parse = this->root;
     for (int i = 0; i < key.size(); i++)
     {
@@ -127,8 +146,8 @@ TrieNode<T> *trie<T>::insert(string key, T value)
         }
         parse = parse->next[key[i]];
     }
+    // parse->fullkey = key;
     parse->eow = 1;
-    updateEnd(0);
     return parse;
 }
 
@@ -189,7 +208,7 @@ bool trie<T>::empty()
 }
 
 template <typename T>
-int trie<T>::checksize(TrieNode<T> *root)
+int trie<T>::checkSize(TrieNode<T> *root)
 {
     int t = 0;
     if (!root) return 0;
@@ -205,23 +224,7 @@ int trie<T>::checksize(TrieNode<T> *root)
 template <typename T>
 int trie<T>::size()
 {
-    return checksize(root);
-}
-
-template <typename T>
-void trie<T>::updateEnd(bool rem) {
-    TrieNode<T> *parse = this->root;
-    while(parse->next.find(char()) == parse->next.end() and !parse->next.empty()) {
-        parse = (*(parse->next.rbegin())).second;
-    }
-    if(rem) {
-        parse->next.clear();
-        this->end_->parent = nullptr;
-    }
-    else {
-        parse->next[char()] = this->end_;
-        this->end_->parent = parse;
-    }
+    return checkSize(root);
 }
 
 template<typename T> typename trie<T> :: iterator trie<T> :: begin()
@@ -245,42 +248,43 @@ typename trie<T>::iterator trie<T>::end()
 /*template <typename T>
 typename trie<T>::reverse_iterator trie<T>::rbegin()
 {    
-    
     TrieNode<T>* t = this->end().ptr_t;
     --t;
-    cout<<t->key;
+    // cout<<t->key;
     iterator k(t);
     reverse_iterator res = k;
     return res;
-}*/
+    // return make_reverse_iterator(end());
+}
 
-/*template <typename T>
+
+template <typename T>
 typename trie<T>::reverse_iterator trie<T>::rend()
 {   
-    iterator it(this->root);
+    iterator it(this->end_);
     reverse_iterator res(it);//reverse_iterator(it);
     return res;
-// return trie<T>::reverse_iterator(trie<T>::begin());
+    // return make_reverse_iterator(begin());
 }*/
 
 template <typename T>
 typename trie<T>::iterator trie<T>::search(std::string key)
 {
-TrieNode<T>* t = this->root;
-for(int i=0;i<key.size();i++)
-{
-    if (t->next.find(key[i]) == t->next.end())
+    TrieNode<T>* t = this->root;
+    for(int i=0;i<key.size();i++)
     {
-        return this->end();
+        if (t->next.find(key[i]) == t->next.end())
+        {
+            return this->end();
+        }
+        t = t->next[key[i]];
     }
-    t = t->next[key[i]];
-}
-if (t != NULL && t->eow)
-{   
-    iterator it(t);
-    return it;
-}
-return this->end();
+    if (t != NULL && t->eow)
+    {   
+        iterator it(t);
+        return it;
+    }
+    return this->end();
 }
 
 template <typename T>

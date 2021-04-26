@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-    trie<int> t, t1;
+    trie<string> t, t1;
     t.insert("abc");
     t.insert("hello");
     t.insert("hell");
@@ -17,40 +17,30 @@ int main() {
     t1.insert("abc");
     t1.insert("hello");
     t1.insert("hell");
-    t1.insert("helluz");
-    t1.insert("helloworld");
-    t1.insert("helluza");
-    t1.insert("helluzb");
-    t1.insert("helluzbg");
-    t1.insert("helluzc");
-    trie<int> :: iterator it = t.begin();
+    t1 = t;
+    t1.erase("abc");
+    t1.insert("abd");
+    trie<string> :: iterator it = t.begin();
 
-    //vector<string> a,b;
-
-    for(it = t.begin();it != t.end(); ++it) {
-        cout<<it.getKey()<<" ";
-    }
-
-   /* for(it = t.end();it != t.begin(); --it) {
-        if(it != t.end()) b.push_back(*it);
-    }
-    b.push_back(*it);
-    reverse(b.begin(), b.end());
-    for(auto i : a) {
-        cout << i << " ";
-    }
-    cout << endl;
-    for(auto i : b) {
-        cout << i << " ";
+    for(auto a : t) {
+        cout << a << " ";
     }
     cout << endl;
 
-    cout << equal(t.begin(), t.end(), t1.begin());
-    
-    // for(auto a: t) cout << a << " ";
-    // cout << endl;
+    for(auto a : t1) {
+        cout << a << " ";
+    }
+    cout << endl;
 
-    // cout << (find(t.begin(), t.end(), "helluz") != t.end()) << endl;
+    it = t.end();
+    for(;it!=t.begin();--it) {
+        cout << *it << " ";
+    }
+    cout <<*it<< endl;
 
-    return 0;*/
+    cout << (find(t.begin(), t.end(), "helluzb") != t.end()) << endl;
+
+    cout <<  equal(t.begin(), t.end(), t1.begin());
+
+    return 0;
 }
