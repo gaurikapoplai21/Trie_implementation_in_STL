@@ -336,13 +336,22 @@ template <typename T>
 vector<string> trie<T>::autocomplete(std::string key)
 {   
     vector<string> v;
-    auto it = prefix_search(key);
-    if(it == this->end())
+    TrieNode<T> *t = this->root;
+    for (int i = 0; i < key.size(); i++)
     {
-         return v;
+        if (t->next.find(key[i]) == t->next.end())
+        {
+            return v;
+        }
+        t = t->next[key[i]];
+    }
+    if (t == NULL)
+    {
+        return v;
     }
     
-    dfs(it.getNode(),v,key);
+    
+    dfs(t,v,key);
     return v;
 
 }

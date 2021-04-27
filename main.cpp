@@ -24,7 +24,7 @@ int main() {
     vector<string> v = t.autocomplete("hell");
     vector<string> x = t.autocomplete("z");
 
-    for(auto i: v)
+    for(auto i: x)
     {
         cout<<i<<" ";
     }
