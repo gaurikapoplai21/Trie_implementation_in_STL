@@ -40,6 +40,10 @@ public:
 
     char getKey();
     T getValue();
+    TrieNode<T>* getNode()
+    {
+        return this->ptr_t;
+    }
     //T operator->() const;   //TBD
 
     //friend functions

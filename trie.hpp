@@ -18,19 +18,20 @@ private:
     void recursiveDestroy(TrieNode<T> *root);
     void deepCopyRoot(TrieNode<T> *a, TrieNode<T> *b);
     int checkSize(TrieNode<T> *root);
+    void dfs(TrieNode<T>* , vector<string>& , string );
 
-public:
-     using iterator = trie_iterator<T>;
-     using reverse_iterator = std::reverse_iterator<iterator>;
+    public : using iterator = trie_iterator<T>;
+    using reverse_iterator = std::reverse_iterator<iterator>;
 
-     // begin and end objects of template class trie_iterator
-     iterator begin();
-     iterator end();
-     reverse_iterator rbegin();
-     reverse_iterator rend();
+    // begin and end objects of template class trie_iterator
+    iterator begin();
+    iterator end();
+    reverse_iterator rbegin();
+    reverse_iterator rend();
 
-     iterator search(std::string);
-     iterator prefix_search(std::string);
+    iterator search(std::string);
+    iterator prefix_search(std::string);
+    vector<string> autocomplete(std::string);
 
     trie()
     {
@@ -305,6 +306,45 @@ typename trie<T>::iterator trie<T>::prefix_search(std::string key)
         return it;
     }
     return this->end();
+}
+
+
+
+template <typename T>
+void trie<T>::dfs(TrieNode<T>* ptr, vector<string> &v, string prefix)
+{
+    if(ptr->eow)
+    {
+        v.push_back(prefix);
+        
+    }
+    if(ptr->next.empty())
+    {
+        return;
+    }
+
+    for(auto it: ptr->next)
+    {
+        prefix += (it.first);
+        dfs(ptr->next[(it.first)],v,prefix);
+        prefix.pop_back();
+    }
+
+}
+
+template <typename T>
+vector<string> trie<T>::autocomplete(std::string key)
+{   
+    vector<string> v;
+    auto it = prefix_search(key);
+    if(it == this->end())
+    {
+         return v;
+    }
+    
+    dfs(it.getNode(),v,key);
+    return v;
+
 }
 
 #endif

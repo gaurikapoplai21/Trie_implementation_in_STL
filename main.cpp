@@ -20,9 +20,16 @@ int main() {
     t1 = t;
     t1.erase("abc");
     t1.insert("abd");
-    trie<string> :: iterator it = t.begin();
+    //trie<string> :: iterator it = t.begin();
+    vector<string> v = t.autocomplete("hell");
+    vector<string> x = t.autocomplete("z");
 
-    for(auto a : t) {
+    for(auto i: v)
+    {
+        cout<<i<<" ";
+    }
+
+   /* for(auto a : t) {
         cout << a << " ";
     }
     cout << endl;
@@ -40,7 +47,7 @@ int main() {
 
     cout << (find(t.begin(), t.end(), "helluzb") != t.end()) << endl;
 
-    cout <<  equal(t.begin(), t.end(), t1.begin());
+    cout <<  equal(t.begin(), t.end(), t1.begin());*/
 
     return 0;
 }
