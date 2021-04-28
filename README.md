@@ -14,7 +14,7 @@ TrieMap is a templated trie in which each end of word can contain a value associ
 Type of this value is templated meaning it can take data with any datatype. TrieMap works similar to any STL map but internally in a map the keys are stored in a red-black tree whereas in a triemap keys are stored in trie fashion. 
 
 <p align="center">
-    <span> Trie Representation </span>
+    <span> Trie Representation </span><br>
     <img src="https://user-images.githubusercontent.com/44120464/116353671-0e3ca100-a7ac-11eb-9275-45a5fda368e3.png" />
 </p>
 
@@ -60,10 +60,10 @@ using namespace std;
 
 int main() {
 	trie<int> t; // to call the constructor of the trie class
-    t["hello"] = 10; // to call operator[]() function
+  t["hello"] = 10; // to call operator[]() function
 	// alternatively
 	t.insert("helloworld",10); /* note that value component is not compulsory 
-    if not provided it takes default value of the template type.*/
+  if not provided it takes default value of the template type.*/
 }
 ```
 
@@ -74,7 +74,9 @@ using namespace std;
 
 int main() {
 	trie<int> t; // to call the constructor of the trie class
-    t["hello"] = 10;
-	t.erase("hello") // this is remove the key provided.
+  t["hello"] = 10;
+	t.erase("hello"); // this is remove the key provided.
 }
 ```
+
+
