@@ -43,15 +43,15 @@ int main() {
     trie<int> t; // to call the constructor of the trie class
   }
   ```
+- **Insertion**:
+  - **[] Insertion** : This is a feature used in triemap for a value lookup associated with a key (end of word).
+    - Example: t["hello"] = 10;
+    - Time complexity: O(m)
 
-- **Map Insertion** : This is a feature used in triemap for a value lookup associated with a key (end of word).
-  - Example: t["hello"] = 10;
-  - Time complexity: O(m)
-
-- **Insertion** : Users can also use a public function "insert(<key>)". Using this function user can insert a key in the trie but the value assciated with the key will be a                       default of the selected datatype like the rest of the prefix of that string.
-  - Example: t.insert("hello"); 
-  - Time complexity: O(m)
-  
+  - **Function Insertion** : Users can also use a public function "insert(<key>)". Using this function user can insert a key in the trie but the value assciated with the key will be a                       default of the selected datatype like the rest of the prefix of that string.
+    - Example: t.insert("hello"); 
+    - Time complexity: O(m)
+    
   <!-- **Insertion**: -->
   ```cpp
   #include "trie.hpp"
@@ -66,7 +66,7 @@ int main() {
   }
   ```
 
-- **Deletion** : This is feature to detele a key from the trie using a public function "erase(<key>)". 
+- **Deletion** : This is feature to delete a key from the trie using a public function "erase(<key>)". 
   - Example: t.erase("hello"); 
   - Time complexity: O(m)
 
@@ -83,6 +83,19 @@ int main() {
   ```
 
 - **Find** : This is a feature is to find any given key in the trie.
+  - *contains(\<key>)* : provide a key and an iterator is return pointing to the end of word of that key if the key is found. If not found then iterator pointing to end of the trie is returned.
+  ```cpp
+  #include "trie.hpp"
+  using namespace std;
+
+  int main() {
+    trie<int> t;
+    t.insert("hello")
+    bool it = t.search("hello"); // output -> true
+    bool it = t.search("hell"); // output -> false
+  }
+  ```
+
   - *search(\<key>)* : provide a key and an iterator is return pointing to the end of word of that key if the key is found. If not found then iterator pointing to end of the trie is returned.
   ```cpp
   #include "trie.hpp"
@@ -120,6 +133,31 @@ int main() {
     vector<string> arr = t.autocomplete("hell"); // output -> {"hello", "helloworld"}
   }
   ```
+- **Empty** : checks if the trie is empty or not using "empty()". If trie is empty then it contains only root and end. Returns true is empty, else false.
+  ```cpp
+  #include "trie.hpp"
+  using namespace std;
+
+  int main() {
+    trie<int> t;
+    bool a = t.empty(); // output -> true
+    t.insert("hello");
+    bool a = t.empty(); // output -> false
+  }
+  ```
+
+- **Size** : Returns an integer stating the size or total number of keys (end of words) in the trie.
+  ```cpp
+  #include "trie.hpp"
+  using namespace std;
+
+  int main() {
+    trie<int> t;
+    t.insert("hello");
+    int a = t.size(); // output -> 1
+  }
+  ```
+
 
 
 
