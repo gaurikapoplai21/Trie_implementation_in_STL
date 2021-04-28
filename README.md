@@ -49,9 +49,7 @@ It is important to make sure all the files trie.hpp, trienode.hpp, trie_iterator
 using namespace std;
 
 int main() {
-	trie<int> t; # to call the constructor of the trie class
-    # Deletion
-	t.erase("hello") # this is remove the key provided.
+	trie<int> t; // to call the constructor of the trie class
 }
 ```
 
@@ -61,10 +59,11 @@ int main() {
 using namespace std;
 
 int main() {
-	trie<int> t; # to call the constructor of the trie class
-    t["hello"] = 10; # to call operator[]() function
-	# alternatively
-	t.insert("helloworld",10); # note that value component is not compulsory if not provided it takes default value of the template type.
+	trie<int> t; // to call the constructor of the trie class
+    t["hello"] = 10; // to call operator[]() function
+	// alternatively
+	t.insert("helloworld",10); /* note that value component is not compulsory 
+    if not provided it takes default value of the template type.*/
 }
 ```
 
@@ -74,10 +73,8 @@ int main() {
 using namespace std;
 
 int main() {
-	trie<int> t; # to call the constructor of the trie class
-    t["hello"] = 10; # to call operator[]() function
-	# alternatively
-	t.insert("helloworld",10); # note that value component is not compulsory if not provided it takes default value of the template type.
-	t.erase("hello") # this is remove the key provided.
+	trie<int> t; // to call the constructor of the trie class
+    t["hello"] = 10;
+	t.erase("hello") // this is remove the key provided.
 }
 ```
