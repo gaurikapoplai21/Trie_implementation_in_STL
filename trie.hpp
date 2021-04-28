@@ -20,7 +20,8 @@ private:
     int checkSize(TrieNode<T> *root);
     void dfs(TrieNode<T>* , vector<string>& , string );
 
-    public : using iterator = trie_iterator<T>;
+    public : 
+    using iterator = trie_iterator<T>;
     using reverse_iterator = std::reverse_iterator<iterator>;
 
     // begin and end objects of template class trie_iterator
@@ -30,7 +31,7 @@ private:
     reverse_iterator rend();
 
     iterator search(std::string);
-    iterator prefix_search(std::string);
+    bool prefix_search(std::string);
     vector<string> autocomplete(std::string);
 
     trie()
@@ -289,23 +290,22 @@ typename trie<T>::iterator trie<T>::search(std::string key)
 }
 
 template <typename T>
-typename trie<T>::iterator trie<T>::prefix_search(std::string key)
+bool trie<T>::prefix_search(std::string key)
 {
     TrieNode<T> *t = this->root;
     for (int i = 0; i < key.size(); i++)
     {
         if (t->next.find(key[i]) == t->next.end())
         {
-            return this->end();
+            return false;
         }
         t = t->next[key[i]];
     }
     if (t != NULL)
     {
-        iterator it(t);
-        return it;
+        return true;
     }
-    return this->end();
+    return false;
 }
 
 
@@ -345,7 +345,7 @@ vector<string> trie<T>::autocomplete(std::string key)
         }
         t = t->next[key[i]];
     }
-    if (t == NULL)
+    if (t==NULL)
     {
         return v;
     }
