@@ -22,6 +22,15 @@ Type of this value is templated meaning it can take data with any datatype. Trie
   
   - **Declaration**  : Declare the trie by specifying the keyword "trie" and the datatype.
     - Example: trie\<int> t;
+    **Constructor trie\<T>()**:
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
+
+    int main() {
+      trie<int> t; // to call the constructor of the trie class
+    }
+    ```
   
   - **Map Insertion** : This is a feature used in triemap for a value lookup associated with a key (end of word).
     - Example: t["hello"] = 10;
@@ -30,10 +39,36 @@ Type of this value is templated meaning it can take data with any datatype. Trie
   - **Insertion** : Users can also use a public function "insert(<key>)". Using this function user can insert a key in the trie but the value assciated with the key will be a                       default of the selected datatype like the rest of the prefix of that string.
     - Example: t.insert("hello"); 
     - Time complexity: O(m)
+    
+    <!-- **Insertion**: -->
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
+
+    int main() {
+      trie<int> t; // to call the constructor of the trie class
+      t["hello"] = 10; // to call operator[]() function
+      // alternatively
+      t.insert("helloworld",10); // note that value component is not compulsory 
+      //if not provided it takes default value of the template type.
+    }
+    ```
   
   - **Deletion** : This is feature to detele a key from the trie using a public function "erase(<key>)". 
     - Example: t.erase("hello"); 
     - Time complexity: O(m)
+
+    <!-- **Deletion**: -->
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
+
+    int main() {
+      trie<int> t; // to call the constructor of the trie class
+      t["hello"] = 10;
+      t.erase("hello"); // this is remove the key provided.
+    }
+    ```
   
   - **Find** : This is a feature is to find any given key in the trie.
     - *search(\<key>)* : provide a key and an iterator is return pointing to the end of word of that key if the key is found. If not found then iterator pointing to end of the                            trie is returned.
@@ -43,40 +78,10 @@ Type of this value is templated meaning it can take data with any datatype. Trie
 ## How to use:
 It is important to make sure all the files trie.hpp, trienode.hpp, trie_iterator.hpp are present in where you are running the code. Then you can use #include "trie.hpp" to use all the functionalities of trie.
 
-**Constructor trie\<T>()**:
-```cpp
-#include "trie.hpp"
-using namespace std;
 
-int main() {
-	trie<int> t; // to call the constructor of the trie class
-}
-```
 
-**Insertion**:
-```cpp
-#include "trie.hpp"
-using namespace std;
 
-int main() {
-	trie<int> t; // to call the constructor of the trie class
-  t["hello"] = 10; // to call operator[]() function
-	// alternatively
-	t.insert("helloworld",10); /* note that value component is not compulsory 
-  if not provided it takes default value of the template type.*/
-}
-```
 
-**Deletion**:
-```cpp
-#include "trie.hpp"
-using namespace std;
 
-int main() {
-	trie<int> t; // to call the constructor of the trie class
-  t["hello"] = 10;
-	t.erase("hello"); // this is remove the key provided.
-}
-```
 
 
