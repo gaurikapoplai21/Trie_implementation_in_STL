@@ -43,22 +43,41 @@ Type of this value is templated meaning it can take data with any datatype. Trie
 ## How to use:
 It is important to make sure all the files trie.hpp, trienode.hpp, trie_iterator.hpp are present in where you are running the code. Then you can use #include "trie.hpp" to use all the functionalities of trie.
 
-'''cpp
+**Constructor trie\<T>()**:
+```cpp
 #include "trie.hpp"
 using namespace std;
 
 int main() {
-	trie<int> t ; # to call the constructor of the trie class
-
-    # Insertion 
-	t["hello"] = 10; # to call operator[]() function
-	
-	# alternatively
-	
-	t.insert("helloworld",10); # note that value component is not compulsory if not provided it takes default value of the template type.
-	
+	trie<int> t; # to call the constructor of the trie class
     # Deletion
 	t.erase("hello") # this is remove the key provided.
 }
-'''
+```
 
+**Insertion**:
+```cpp
+#include "trie.hpp"
+using namespace std;
+
+int main() {
+	trie<int> t; # to call the constructor of the trie class
+    t["hello"] = 10; # to call operator[]() function
+	# alternatively
+	t.insert("helloworld",10); # note that value component is not compulsory if not provided it takes default value of the template type.
+}
+```
+
+**Deletion**:
+```cpp
+#include "trie.hpp"
+using namespace std;
+
+int main() {
+	trie<int> t; # to call the constructor of the trie class
+    t["hello"] = 10; # to call operator[]() function
+	# alternatively
+	t.insert("helloworld",10); # note that value component is not compulsory if not provided it takes default value of the template type.
+	t.erase("hello") # this is remove the key provided.
+}
+```
