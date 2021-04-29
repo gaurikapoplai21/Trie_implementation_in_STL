@@ -1,8 +1,7 @@
 # Trie_implementation_in_STL
+Generic Programming Project --- TrieMap
 
-GP Project
-
-# Index:
+## Index:
 - [Trie](#trie) 
 - [Our Implementaion](#implementation) 
 - [How to use](#use)
@@ -45,7 +44,7 @@ Type of this value is templated meaning it can take data with any datatype. Trie
 
 <p align="center">
     <span> Trie Representation </span><br>
-    <img src="https://user-images.githubusercontent.com/44120464/116353671-0e3ca100-a7ac-11eb-9275-45a5fda368e3.png" />
+    <img src="https://user-images.githubusercontent.com/44120464/116500750-10623680-a864-11eb-8ac4-2b34a9aae28d.gif" />
 </p>
 
 ## How to use: <a name = "use"></a>
