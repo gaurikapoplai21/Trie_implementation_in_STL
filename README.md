@@ -34,15 +34,14 @@ int main() {
   
 - **Declaration**  : Declare the trie by specifying the keyword "trie" and the datatype.
   - Example: trie\<int> t;
-  <!-- **Constructor trie\<T>()**: -->
-  ```cpp
-  #include "trie.hpp"
-  using namespace std;
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
 
-  int main() {
-    trie<int> t; // to call the constructor of the trie class
-  }
-  ```
+    int main() {
+      trie<int> t; // to call the constructor of the trie class
+    }
+    ```
 - **Insertion**:
   - *[] Insertion* : This is a feature used in triemap for a value lookup associated with a key (end of word).
     - Example: t["hello"] = 10;
@@ -51,7 +50,7 @@ int main() {
   - *Function Insertion* : Users can also use a public function "insert(<key>)". Using this function user can insert a key in the trie but the value assciated with the key will be a default of the selected datatype like the rest of the prefix of that string.
     - Example: t.insert("hello"); 
     - Time complexity: O(m)
-    
+  <br>
   <!-- **Insertion**: -->
   ```cpp
   #include "trie.hpp"
@@ -70,57 +69,59 @@ int main() {
   - Example: t.erase("hello"); 
   - Time complexity: O(m)
 
-  <!-- **Deletion**: -->
-  ```cpp
-  #include "trie.hpp"
-  using namespace std;
+    <!-- **Deletion**: -->
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
 
-  int main() {
-    trie<int> t;
-    t["hello"] = 10;
-    t.erase("hello"); // this is remove the key provided.
-  }
-  ```
+    int main() {
+      trie<int> t;
+      t["hello"] = 10;
+      t.erase("hello"); // this is remove the key provided.
+    }
+    ```
 
 - **Find** : This is a feature is to find any given key in the trie.
   - *contains(\<key>)* : provide a key and an iterator is return pointing to the end of word of that key if the key is found. If not found then iterator pointing to end of the trie is returned.
-  ```cpp
-  #include "trie.hpp"
-  using namespace std;
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
 
-  int main() {
-    trie<int> t;
-    t.insert("hello")
-    bool it = t.search("hello"); // output -> true
-    bool it = t.search("hell"); // output -> false
-  }
-  ```
+    int main() {
+      trie<int> t;
+      t.insert("hello")
+      bool it = t.search("hello"); // output -> true
+      bool it = t.search("hell"); // output -> false
+    }
+    ```
 
   - *prefix_search(\<key>)* : provide a key and a boolean value is returned, "true" if present, else "false". 
-  ```cpp
-  #include "trie.hpp"
-  using namespace std;
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
 
-  int main() {
-    trie<int> t;
-    t.insert("hello")
-    bool a = t.prefix_search("hell"); // output -> true
-    bool b = t.prefix_search("helm"); // output -> false
-  }
-  ```
+    int main() {
+      trie<int> t;
+      t.insert("hello")
+      bool a = t.prefix_search("hell"); // output -> true
+      bool b = t.prefix_search("helm"); // output -> false
+    }
+    ```
+
   - *autocomplete(\<key>)* : provide a key and a vector of strings is returned containing all the end of words that can be reached from that prefix.
-  ```cpp
-  #include "trie.hpp"
-  using namespace std;
+    ```cpp
+    #include "trie.hpp"
+    using namespace std;
 
-  int main() {
-    trie<int> t;
-    t.insert("hello")
-    t.insert("helloworld")
-    t.insert("hex")
-    vector<string> arr = t.autocomplete("hell"); // output -> {"hello", "helloworld"}
-  }
-  ```
+    int main() {
+      trie<int> t;
+      t.insert("hello")
+      t.insert("helloworld")
+      t.insert("hex")
+      vector<string> arr = t.autocomplete("hell"); // output -> {"hello", "helloworld"}
+    }
+    ```
+
 - **Empty** : checks if the trie is empty or not using "empty()". If trie is empty then it contains only root and end. Returns true is empty, else false.
   ```cpp
   #include "trie.hpp"
@@ -146,7 +147,7 @@ int main() {
   }
   ```
 
-## Iterators:
+## Iterators trie<T>::iterators:
 Iterators are also supported in our trie implementation and are pointers to a particular node which are marked as end of word and a special end of trie location.<br>
 Users are restricted by iterators pointing to only end of words and cannot access any prefix nodes. Modifing trie structure access are strictly restricted.
 
@@ -160,6 +161,7 @@ Users are restricted by iterators pointing to only end of words and cannot acces
       trie<int>::iterator it;
     }
     ```
+
   - **Begin** : this points to the first end of word of the trie.
     ```cpp
     #include "trie.hpp"
@@ -171,6 +173,7 @@ Users are restricted by iterators pointing to only end of words and cannot acces
       trie<int>::iterator it = t.begin(); // points to node 'o'
     }
     ```
+
   - **End** : this points to the end of the trie.
     ```cpp
     #include "trie.hpp"
@@ -182,6 +185,7 @@ Users are restricted by iterators pointing to only end of words and cannot acces
       trie<int>::iterator it = t.end(); // points to end of trie
     }
     ```
+
   - **++ Operator** : this increments the pointer and moves its poition to the next end of word.
     ```cpp
     #include "trie.hpp"
@@ -195,6 +199,7 @@ Users are restricted by iterators pointing to only end of words and cannot acces
       ++it; // points to node 'd'
     }
     ```
+
   - **-- Operator** : this decrements the pointer and moves its poition to the previous end of word.
     ```cpp
     #include "trie.hpp"
@@ -207,6 +212,7 @@ Users are restricted by iterators pointing to only end of words and cannot acces
       --it; // points to node 'o'
     }
     ```
+
   - **Deference** : this calls the "operator*()" which returns a string which is the key ending at thet point.
     ```cpp
     #include "trie.hpp"
@@ -219,6 +225,7 @@ Users are restricted by iterators pointing to only end of words and cannot acces
       cout << *it; // output -> "hello"
     }
     ```
+
   - **find** : 
     - *search(\<key>)* : provide a key and an iterator is return pointing to the end of word of that key if the key is found. If not found then iterator pointing to end of the trie is returned.
     ```cpp
@@ -245,8 +252,9 @@ Users are restricted by iterators pointing to only end of words and cannot acces
       trie<int>::iterator it = find(t.begin(), t.end(), "git"); // output -> iterator to end of trie
     }
     ```
+    
   - **std::equal** : compares two tries, provide "begin()" and "end()" of the first trie and "begin()" of the second trie. Returns true if equal else false.
-  ```cpp
+    ```cpp
     #include "trie.hpp"
     using namespace std;
 
