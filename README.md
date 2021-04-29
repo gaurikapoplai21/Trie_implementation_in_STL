@@ -33,7 +33,6 @@ int main() {
 ## Operations:
   
 - **Declaration**  : Declare the trie by specifying the keyword "trie" and the datatype.
-  - Example: trie\<int> t;<br><br>
   ```cpp
   #include "trie.hpp"
   using namespace std;
