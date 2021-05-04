@@ -18,9 +18,9 @@ private:
     void recursiveDestroy(TrieNode<T> *root);
     void deepCopyRoot(TrieNode<T> *a, TrieNode<T> *b);
     int checkSize(TrieNode<T> *root);
-    void dfs(TrieNode<T>* , vector<string>& , string );
+    void dfs(TrieNode<T> *, vector<string> &, string);
 
-    public : 
+public:
     using iterator = trie_iterator<T>;
     using reverse_iterator = std::reverse_iterator<iterator>;
 
@@ -67,7 +67,7 @@ private:
         return *this;
     }
 
-    trie (const trie<T> &x)
+    trie(const trie<T> &x)
     {
         if (this != &x)
         {
@@ -87,11 +87,13 @@ private:
 };
 
 template <typename T>
-void trie<T>::deepCopyRoot(TrieNode<T> *a, TrieNode<T> *b) {
+void trie<T>::deepCopyRoot(TrieNode<T> *a, TrieNode<T> *b)
+{
     b->eow = a->eow;
     b->key = a->key;
     b->value = a->value;
-    for(auto x : a->next) {
+    for (auto x : a->next)
+    {
         b->next[x.first] = createNode(x.first);
         b->next[x.first]->addParent(b);
         deepCopyRoot(x.second, b->next[x.first]);
@@ -107,14 +109,17 @@ void trie<T>::recursiveDestroy(TrieNode<T> *root)
         root = nullptr;
         return;
     }
-    
+
     auto it = root->next.cbegin();
     while (it != root->next.cend())
     {
-        if(root->next.find(it->first) != root->next.cend()) {
+        if (root->next.find(it->first) != root->next.cend())
+        {
             recursiveDestroy(it->second);
             it = root->next.erase(it);
-        } else ++it;
+        }
+        else
+            ++it;
     }
 
     if (root->next.empty())
@@ -213,7 +218,8 @@ template <typename T>
 int trie<T>::checkSize(TrieNode<T> *root)
 {
     int t = 0;
-    if (!root) return 0;
+    if (!root)
+        return 0;
     if (root->eow)
         t = 1;
     for (auto a : root->next)
@@ -229,10 +235,13 @@ int trie<T>::size()
     return checkSize(root);
 }
 
-template<typename T> typename trie<T> :: iterator trie<T> :: begin()
+template <typename T>
+typename trie<T>::iterator trie<T>::begin()
 {
-    TrieNode<T>* ptr = this->root;
-    while(ptr->eow != true)
+    if (this->empty())
+        return this->end();
+    TrieNode<T> *ptr = this->root;
+    while (ptr->eow != true)
     {
         ptr = ptr->next.begin()->second;
     }
@@ -259,7 +268,6 @@ typename trie<T>::reverse_iterator trie<T>::rbegin()
     // return make_reverse_iterator(end());
 }
 
-
 template <typename T>
 typename trie<T>::reverse_iterator trie<T>::rend()
 {   
@@ -272,8 +280,8 @@ typename trie<T>::reverse_iterator trie<T>::rend()
 template <typename T>
 typename trie<T>::iterator trie<T>::search(std::string key)
 {
-    TrieNode<T>* t = this->root;
-    for(int i=0;i<key.size();i++)
+    TrieNode<T> *t = this->root;
+    for (int i = 0; i < key.size(); i++)
     {
         if (t->next.find(key[i]) == t->next.end())
         {
@@ -282,7 +290,7 @@ typename trie<T>::iterator trie<T>::search(std::string key)
         t = t->next[key[i]];
     }
     if (t != NULL && t->eow)
-    {   
+    {
         iterator it(t);
         return it;
     }
@@ -308,33 +316,29 @@ bool trie<T>::prefix_search(std::string key)
     return false;
 }
 
-
-
 template <typename T>
-void trie<T>::dfs(TrieNode<T>* ptr, vector<string> &v, string prefix)
+void trie<T>::dfs(TrieNode<T> *ptr, vector<string> &v, string prefix)
 {
-    if(ptr->eow)
+    if (ptr->eow)
     {
         v.push_back(prefix);
-        
     }
-    if(ptr->next.empty())
+    if (ptr->next.empty())
     {
         return;
     }
 
-    for(auto it: ptr->next)
+    for (auto it : ptr->next)
     {
         prefix += (it.first);
-        dfs(ptr->next[(it.first)],v,prefix);
+        dfs(ptr->next[(it.first)], v, prefix);
         prefix.pop_back();
     }
-
 }
 
 template <typename T>
 vector<string> trie<T>::autocomplete(std::string key)
-{   
+{
     vector<string> v;
     TrieNode<T> *t = this->root;
     for (int i = 0; i < key.size(); i++)
@@ -345,15 +349,13 @@ vector<string> trie<T>::autocomplete(std::string key)
         }
         t = t->next[key[i]];
     }
-    if (t==NULL)
+    if (t == NULL)
     {
         return v;
     }
-    
-    
-    dfs(t,v,key);
-    return v;
 
+    dfs(t, v, key);
+    return v;
 }
 
 #endif

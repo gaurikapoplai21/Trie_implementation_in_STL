@@ -2,7 +2,8 @@
 #include "trie.hpp"
 using namespace std;
 
-int main() {
+int main()
+{
     trie<string> t, t1;
     t.insert("abc");
     t.insert("hello");
@@ -20,34 +21,56 @@ int main() {
     t1 = t;
     t1.erase("abc");
     t1.insert("abd");
-    //trie<string> :: iterator it = t.begin();
+
+    trie<string>::iterator it = t.begin();
     vector<string> v = t.autocomplete("hell");
     vector<string> x = t.autocomplete("z");
 
-    for(auto i: x)
+    cout << "Auto-complete result \'v\':" << endl;
+    for (auto i : x)
     {
-        cout<<i<<" ";
+        cout << i << " ";
     }
+    cout << endl;
 
-   /* for(auto a : t) {
+    cout << "Auto-complete result \'x\':" << endl;
+    for (auto a : v)
+    {
         cout << a << " ";
     }
     cout << endl;
 
-    for(auto a : t1) {
+    cout << "T1:" << endl;
+    for (auto a : t1)
+    {
         cout << a << " ";
     }
     cout << endl;
 
+    cout << "Reverse: " << endl;
     it = t.end();
-    for(;it!=t.begin();--it) {
-        cout << *it << " ";
+    for (; it != t.begin(); --it)
+    {
+        if (it != t.end())
+            cout << *it << " ";
     }
-    cout <<*it<< endl;
+    cout << *it << endl;
 
+    cout << "STD::Find" << endl;
     cout << (find(t.begin(), t.end(), "helluzb") != t.end()) << endl;
 
-    cout <<  equal(t.begin(), t.end(), t1.begin());*/
+    cout << "STD::equal" << endl;
+    cout << equal(t.begin(), t.end(), t1.begin()) << endl;
+
+    cout << "begin(t):" << endl;
+    cout << *begin(t) << endl;
+
+    cout << "end(t)-1:" << endl;
+    cout << *(--end(t)) << endl;
+
+    cout << "begin == end:" << endl;
+    vector<int> tx;
+    cout << (tx.begin() == tx.end()) << endl;
 
     return 0;
 }
