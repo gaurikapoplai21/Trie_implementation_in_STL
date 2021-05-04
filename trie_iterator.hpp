@@ -26,7 +26,7 @@ public:
     trie_iterator<T>(const trie_iterator<T> &);
 
     //copy assignment operator
-    trie_iterator<T> operator=(const trie_iterator<T> &);
+    trie_iterator<T>& operator=(const trie_iterator<T> &);
 
     //dtor
     ~trie_iterator() = default;
@@ -64,7 +64,7 @@ trie_iterator<T>::trie_iterator(const trie_iterator<T>& rhs) : ptr_t(rhs.ptr_t) 
 
 // copy assignment operator
 template <typename T>
-trie_iterator<T> trie_iterator<T>:: operator=(const trie_iterator<T> & rhs) {this->ptr_t = rhs.ptr_t;}
+trie_iterator<T>& trie_iterator<T>:: operator=(const trie_iterator<T> & rhs) {this->ptr_t = rhs.ptr_t; return *this;}
 
 template<typename T>
 string trie_iterator<T>::operator*() const 
