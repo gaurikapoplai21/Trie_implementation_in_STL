@@ -46,33 +46,53 @@ public:
         return m;
     }
 
-    void printTree(vector<vector<char>> &tree, TrieNode<T> *temp, int l, int r, int depth)
+    void printFill(vector<vector<char>> &tree, TrieNode<T> *temp, int l, int r, int depth)
     {
-        tree[depth][(l + r) / 2] = temp->key;
+        tree[depth + 1][(l + r) / 2] = temp->key;
         if (temp->next.empty())
+        {
+            tree[depth][(l + r) / 2] = '|';
             return;
-        else
-            tree[depth + 1][(l + r) / 2] = '|';
+        }
 
         int interval = (r - l) / temp->next.size(), start = l;
         for (auto a : temp->next)
         {
-            printTree(tree, a.second, start, start + interval, depth + 2);
+            tree[depth][(l + r) / 2] = '|';
+            printFill(tree, a.second, start, start + interval, depth + 2);
             start += interval;
         }
     }
 
-    void printkaro()
+    void printTree()
     {
         TrieNode<T> *temp = this->root;
         int h = getHeight(temp), w = 50;
         vector<vector<char>> tree(2 * (h + 1), vector<char>(w, ' '));
-        printTree(tree, temp, 0, w, 0);
-        for (auto a : tree)
+        printFill(tree, temp, 0, w, 0);
+        for (int i = 0; i < tree.size(); i++)
         {
-            for (auto b : a)
+            int in = -1, out = -1;
+            for (int j = 0; j < tree[i].size(); j++)
             {
-                cout << b;
+                if (tree[i][j] == '|' and i - 1 >= 0 and tree[i - 1][j] == ' ')
+                {
+                    if (in == -1)
+                        in = j;
+                    else
+                        out = j;
+                }
+            }
+            for (int j = 0; j < tree[i].size(); j++)
+            {
+                int k = in;
+
+                while (k != -1 and k <= out)
+                {
+                    tree[i][k] = '_';
+                    k++;
+                }
+                cout << tree[i][j];
             }
             cout << endl;
         }
