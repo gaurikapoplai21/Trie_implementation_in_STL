@@ -34,6 +34,50 @@ public:
     bool prefix_search(std::string);
     vector<string> autocomplete(std::string);
 
+    int getHeight(TrieNode<T> *temp)
+    {
+        if (temp->next.empty())
+            return 0;
+        int m = 0;
+        for (auto a : temp->next)
+        {
+            m = max(m, 1 + getHeight(a.second));
+        }
+        return m;
+    }
+
+    void printTree(vector<vector<char>> &tree, TrieNode<T> *temp, int l, int r, int depth)
+    {
+        tree[depth][(l + r) / 2] = temp->key;
+        if (temp->next.empty())
+            return;
+        else
+            tree[depth + 1][(l + r) / 2] = '|';
+
+        int interval = (r - l) / temp->next.size(), start = l;
+        for (auto a : temp->next)
+        {
+            printTree(tree, a.second, start, start + interval, depth + 2);
+            start += interval;
+        }
+    }
+
+    void printkaro()
+    {
+        TrieNode<T> *temp = this->root;
+        int h = getHeight(temp), w = 50;
+        vector<vector<char>> tree(2 * (h + 1), vector<char>(w, ' '));
+        printTree(tree, temp, 0, w, 0);
+        for (auto a : tree)
+        {
+            for (auto b : a)
+            {
+                cout << b;
+            }
+            cout << endl;
+        }
+    }
+
     trie()
     {
         root = this->createNode('#');
