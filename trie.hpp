@@ -109,7 +109,8 @@ public:
     ~trie()
     {
         TrieNode<T> *parse = this->root;
-        recursiveDestroy(root);
+        if(root != nullptr)
+            recursiveDestroy(root);
     }
 
     T &operator[](string key)
@@ -143,6 +144,26 @@ public:
         }
     }
 
+    trie(trie<T>&& rhs)
+    :root(rhs.root),end_(rhs.end_)
+    {
+        rhs.root = nullptr;
+        rhs.end_ = nullptr;
+    }
+
+    trie& operator=(trie<T>&& rhs) {
+        if(this != &rhs) {
+            if(this->root != nullptr) {
+                recursiveDestroy(this->root);
+            }
+            this->root = rhs.root;
+            this->end_ = rhs.end_;
+            rhs.root = nullptr;
+            rhs.end_ = nullptr;
+        }
+        return *this;
+    }
+
     TrieNode<T> *insert(string key, T value = T());
     bool contains(string key);
     void erase(string key);
@@ -167,6 +188,9 @@ void trie<T>::deepCopyRoot(TrieNode<T> *a, TrieNode<T> *b)
 template <typename T>
 void trie<T>::recursiveDestroy(TrieNode<T> *root)
 {
+
+    //if(!root) return;
+
     if (root->next.empty())
     {
         delete (root);
@@ -420,6 +444,15 @@ vector<string> trie<T>::autocomplete(std::string key)
 
     dfs(t, v, key);
     return v;
+}
+
+template <typename T>
+void myswap(trie<T>& lhs, trie<T>& rhs)
+{
+        trie<T> temp(move(lhs)); //move ctor
+        lhs = move(rhs); // move assignment op
+        rhs = move(temp);
+
 }
 
 #endif

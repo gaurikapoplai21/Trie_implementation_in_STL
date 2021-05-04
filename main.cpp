@@ -22,6 +22,7 @@ int main()
     t1.erase("abc");
     t1.insert("abd");
 
+#if 0
     trie<string>::iterator it = t.begin();
     vector<string> v = t.autocomplete("hell");
     vector<string> x = t.autocomplete("z");
@@ -80,7 +81,87 @@ int main()
     vector<int> tx;
     cout << (tx.begin() == tx.end()) << endl;
     cout << endl;
+#endif
 
+#if 0
+    cout << "printing t\n";
+    for (auto a : t)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+    cout << "printing t2\n";
+    trie<string> t2(move(t));
+    for (auto a : t2)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+#endif
+
+#if 0
+    cout << "printing t\n";
+    for (auto a : t)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+    t1 = move(t); // move assign
+
+    cout << "printing t1\n";
+    for (auto a : t1)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+#endif
+
+#if 0
+    cout << "before swap\n";
+
+    cout << "printing t\n";
+    for (auto a : t)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+    cout << "printing t1\n";
+    for (auto a : t1)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+    myswap(t, t1);
+
+    cout << "after swap\n";
+
+    cout << "printing t\n";
+    for (auto a : t)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+    cout << "printing t1\n";
+    for (auto a : t1)
+    {
+        cout << a << " ";
+    }
+    cout << "\n";
+
+#endif
+
+#if 1
+    cout << endl;
+    cout << "Tree ------------------------------------------" << endl;
     t.printTree();
+#endif
+
     return 0;
 }
