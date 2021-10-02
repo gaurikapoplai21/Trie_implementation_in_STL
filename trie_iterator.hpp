@@ -41,7 +41,6 @@ public:
     char getKey();
     T getValue();
     
-    //T operator->() const;   //TBD
 
     //friend functions
     friend bool operator==(const trie_iterator<T>& one, const trie_iterator<T>& two) {return one.ptr_t == two.ptr_t;}
